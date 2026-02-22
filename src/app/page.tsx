@@ -12,9 +12,9 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-b from-primary-50/80 via-white to-white py-16 sm:py-20 md:py-28 overflow-hidden">
+      <section className="relative bg-gradient-to-b from-primary-50/80 via-white to-white py-16 sm:py-20 md:py-28">
         {/* Subtle background pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(22,163,74,0.05)_0%,transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(22,163,74,0.05)_0%,transparent_50%)] pointer-events-none" />
         
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-slate-900 mb-4 sm:mb-6 tracking-tight">
@@ -31,12 +31,14 @@ export default function HomePage() {
             Trusted by home cooks worldwide • 100% free, no signup required
           </p>
           
-          <SearchBar className="max-w-2xl mx-auto" />
+          <div className="relative z-50">
+            <SearchBar className="max-w-2xl mx-auto" />
+          </div>
         </div>
       </section>
 
       {/* Quick Chips - Scrollable on mobile */}
-      <section className="py-6 sm:py-8 bg-white border-b border-slate-100">
+      <section className="relative z-10 py-6 sm:py-8 bg-white border-b border-slate-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex sm:flex-wrap sm:justify-center gap-2 sm:gap-3 overflow-x-auto pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
             <Link
