@@ -1,0 +1,181 @@
+{
+  "ingredients": [
+    {
+      "id": "egg",
+      "name": "egg",
+      "displayName": "Egg",
+      "cluster": "egg",
+      "defaultUnit": "egg",
+      "alternateUnits": ["eggs"],
+      "commonContexts": ["cake", "cookies", "brownies", "muffins", "pancakes", "waffles", "bread", "banana_bread", "cupcakes"],
+      "substitutes": [
+        {
+          "id": "flax_egg",
+          "name": "flax_egg",
+          "displayName": "Flax Egg",
+          "baseRatio": { "amount": 1, "unit": "tbsp", "perUnit": "egg" },
+          "contextOverrides": [
+            { "context": "cookies", "ratio": { "amount": 1, "unit": "tbsp" }, "notes": "Works great for chewy cookies" },
+            { "context": "brownies", "ratio": { "amount": 1, "unit": "tbsp" }, "notes": "Adds moisture and binding" }
+          ],
+          "dietTags": ["vegan", "gluten-free", "dairy-free"],
+          "goals": ["binding", "moisture"],
+          "bestIn": ["cookies", "brownies", "muffins", "pancakes", "bread"],
+          "avoidIn": ["cake", "cupcakes"],
+          "tasteImpact": "low",
+          "textureImpact": "Slightly denser, nuttier texture",
+          "whenNotToUse": ["Recipes requiring significant rise", "Light and airy cakes", "When nut-free is required"],
+          "notes": "Mix 1 tbsp ground flaxseed + 3 tbsp water, let sit 5 minutes until gel forms. Best for binding in hearty baked goods.",
+          "addOns": ["Add 1/4 tsp baking powder for extra lift"],
+          "affiliateKeywords": ["ground flaxseed", "flax meal"]
+        },
+        {
+          "id": "chia_egg",
+          "name": "chia_egg",
+          "displayName": "Chia Egg",
+          "baseRatio": { "amount": 1, "unit": "tbsp", "perUnit": "egg" },
+          "dietTags": ["vegan", "gluten-free", "dairy-free"],
+          "goals": ["binding", "moisture"],
+          "bestIn": ["cookies", "brownies", "muffins", "pancakes", "bread"],
+          "avoidIn": ["cake", "cupcakes", "frosting"],
+          "tasteImpact": "none",
+          "textureImpact": "Small visible seeds, denser texture",
+          "whenNotToUse": ["Smooth batters where seeds would be visible", "Light cakes", "Recipes needing significant rise"],
+          "notes": "Mix 1 tbsp chia seeds + 3 tbsp water, let sit 5 minutes until gel forms. More neutral taste than flax.",
+          "addOns": ["Add 1/4 tsp baking powder for extra lift"],
+          "affiliateKeywords": ["chia seeds"]
+        },
+        {
+          "id": "applesauce",
+          "name": "applesauce",
+          "displayName": "Unsweetened Applesauce",
+          "baseRatio": { "amount": 0.25, "unit": "cup", "perUnit": "egg" },
+          "contextOverrides": [
+            { "context": "cake", "ratio": { "amount": 0.25, "unit": "cup" }, "notes": "Adds moisture and natural sweetness" },
+            { "context": "muffins", "ratio": { "amount": 0.25, "unit": "cup" }, "notes": "Perfect for moist muffins" }
+          ],
+          "dietTags": ["vegan", "gluten-free", "dairy-free"],
+          "goals": ["moisture", "binding"],
+          "bestIn": ["cake", "muffins", "brownies", "pancakes", "bread", "banana_bread"],
+          "avoidIn": ["cookies", "waffles"],
+          "tasteImpact": "low",
+          "textureImpact": "Moister, slightly denser crumb",
+          "whenNotToUse": ["Crispy cookies", "When fruit flavor is unwanted", "Savory recipes"],
+          "notes": "Use unsweetened applesauce. Adds natural moisture and subtle sweetness. May need to reduce other liquids slightly.",
+          "addOns": ["Add 1/2 tsp baking powder per egg replaced"],
+          "affiliateKeywords": ["unsweetened applesauce"]
+        },
+        {
+          "id": "mashed_banana",
+          "name": "mashed_banana",
+          "displayName": "Mashed Ripe Banana",
+          "baseRatio": { "amount": 0.25, "unit": "cup", "perUnit": "egg" },
+          "dietTags": ["vegan", "gluten-free", "dairy-free"],
+          "goals": ["moisture", "binding"],
+          "bestIn": ["banana_bread", "muffins", "pancakes", "brownies"],
+          "avoidIn": ["cake", "cookies", "cupcakes"],
+          "tasteImpact": "high",
+          "textureImpact": "Denser, moister with distinct banana flavor",
+          "whenNotToUse": ["When banana flavor is unwanted", "Light and fluffy cakes", "Recipes where flavor neutrality matters"],
+          "notes": "Use very ripe bananas (brown spots). About 1/4 cup mashed = 1 medium banana. Strong banana flavor.",
+          "addOns": ["Add 1/2 tsp baking powder for lift"],
+          "affiliateKeywords": []
+        },
+        {
+          "id": "aquafaba",
+          "name": "aquafaba",
+          "displayName": "Aquafaba (Chickpea Water)",
+          "baseRatio": { "amount": 3, "unit": "tbsp", "perUnit": "egg" },
+          "contextOverrides": [
+            { "context": "cake", "ratio": { "amount": 3, "unit": "tbsp" }, "notes": "Whip until foamy for best results" },
+            { "context": "cupcakes", "ratio": { "amount": 3, "unit": "tbsp" }, "notes": "Creates light texture" }
+          ],
+          "dietTags": ["vegan", "gluten-free", "dairy-free"],
+          "goals": ["binding", "leavening", "fluffy"],
+          "bestIn": ["cake", "cupcakes", "muffins", "pancakes", "waffles", "brownies"],
+          "avoidIn": [],
+          "tasteImpact": "none",
+          "textureImpact": "Light and fluffy when whipped, similar to egg whites",
+          "whenNotToUse": ["When chickpea allergy present", "If sodium content is a concern"],
+          "notes": "Liquid from canned chickpeas. 3 tbsp = 1 whole egg, 2 tbsp = 1 egg white. Can be whipped like egg whites.",
+          "addOns": ["Add 1/8 tsp cream of tartar when whipping for stability"],
+          "affiliateKeywords": ["canned chickpeas"]
+        },
+        {
+          "id": "silken_tofu",
+          "name": "silken_tofu",
+          "displayName": "Silken Tofu (Blended)",
+          "baseRatio": { "amount": 0.25, "unit": "cup", "perUnit": "egg" },
+          "dietTags": ["vegan", "gluten-free", "dairy-free"],
+          "goals": ["binding", "moisture", "richness"],
+          "bestIn": ["brownies", "cake", "muffins", "pancakes"],
+          "avoidIn": ["cookies", "bread"],
+          "tasteImpact": "none",
+          "textureImpact": "Dense, creamy, fudgy texture",
+          "whenNotToUse": ["Soy allergies", "When light texture is needed", "Crispy baked goods"],
+          "notes": "Blend until completely smooth. Creates rich, dense texture perfect for fudgy brownies.",
+          "addOns": [],
+          "affiliateKeywords": ["silken tofu"]
+        },
+        {
+          "id": "yogurt",
+          "name": "yogurt",
+          "displayName": "Plain Yogurt",
+          "baseRatio": { "amount": 0.25, "unit": "cup", "perUnit": "egg" },
+          "dietTags": ["vegetarian", "gluten-free"],
+          "goals": ["moisture", "binding", "tenderness"],
+          "bestIn": ["cake", "muffins", "pancakes", "brownies", "cupcakes"],
+          "avoidIn": ["cookies", "bread"],
+          "tasteImpact": "low",
+          "textureImpact": "Tender, moist crumb with slight tang",
+          "whenNotToUse": ["Vegan recipes", "When tang is unwanted", "Dairy-free requirements"],
+          "notes": "Use plain, full-fat yogurt for best results. Greek yogurt works but may need thinning with milk.",
+          "addOns": ["Add 1/4 tsp baking soda to activate with acidity"],
+          "affiliateKeywords": ["plain yogurt", "greek yogurt"]
+        },
+        {
+          "id": "commercial_egg_replacer",
+          "name": "commercial_egg_replacer",
+          "displayName": "Commercial Egg Replacer",
+          "baseRatio": { "amount": 1.5, "unit": "tsp", "perUnit": "egg" },
+          "dietTags": ["vegan", "gluten-free", "dairy-free"],
+          "goals": ["binding", "leavening"],
+          "bestIn": ["cake", "cookies", "muffins", "cupcakes", "pancakes", "brownies"],
+          "avoidIn": [],
+          "tasteImpact": "none",
+          "textureImpact": "Closest to real eggs in most recipes",
+          "whenNotToUse": ["When whole-food ingredients are preferred"],
+          "notes": "Follow package directions. Brands like Bob's Red Mill, JUST Egg, Ener-G. Most reliable for consistent results.",
+          "addOns": [],
+          "affiliateKeywords": ["egg replacer", "Bob's Red Mill egg replacer", "JUST Egg"]
+        }
+      ],
+      "faqItems": [
+        {
+          "question": "What is the best egg substitute for baking cakes?",
+          "answer": "For cakes, aquafaba (3 tbsp per egg) or unsweetened applesauce (1/4 cup per egg) work best. Aquafaba can be whipped to create light, fluffy cakes similar to using real eggs, while applesauce adds moisture and works well in denser cakes."
+        },
+        {
+          "question": "How do I make a flax egg?",
+          "answer": "Mix 1 tablespoon of ground flaxseed with 3 tablespoons of water. Let it sit for 5 minutes until it forms a gel-like consistency. This replaces 1 egg and works best for binding in cookies, brownies, and muffins."
+        },
+        {
+          "question": "Can I use applesauce instead of eggs in cookies?",
+          "answer": "Applesauce is not ideal for cookies as it adds too much moisture, making cookies cakey rather than crispy or chewy. For cookies, use flax eggs, chia eggs, or commercial egg replacers instead."
+        },
+        {
+          "question": "What egg substitute works for binding?",
+          "answer": "For binding, flax eggs, chia eggs, and silken tofu work best. These create a gel-like consistency that holds ingredients together. Use 1 tbsp ground flax or chia + 3 tbsp water per egg."
+        },
+        {
+          "question": "How many eggs can I replace at once?",
+          "answer": "Most egg substitutes work well for replacing 1-3 eggs. For recipes requiring 4+ eggs, results become less predictable. Consider using a combination of substitutes or a commercial egg replacer for best results."
+        },
+        {
+          "question": "What is aquafaba and how do I use it?",
+          "answer": "Aquafaba is the liquid from canned chickpeas. Use 3 tablespoons to replace 1 whole egg, or 2 tablespoons for 1 egg white. It can be whipped like egg whites and works excellently in cakes and meringues."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,437 @@
+{
+  "ingredients": [
+    {
+      "id": "all_purpose_flour",
+      "name": "all_purpose_flour",
+      "displayName": "All-Purpose Flour",
+      "cluster": "flour_butter",
+      "defaultUnit": "cup",
+      "alternateUnits": ["g", "tbsp"],
+      "commonContexts": ["cake", "cookies", "pancakes", "bread", "brownies", "muffins"],
+      "substitutes": [
+        {
+          "id": "whole_wheat_flour",
+          "name": "whole_wheat_flour",
+          "displayName": "Whole Wheat Flour",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "vegetarian", "dairy-free"],
+          "goals": ["structure", "binding"],
+          "bestIn": ["bread", "muffins", "pancakes"],
+          "avoidIn": ["cake", "cookies"],
+          "tasteImpact": "medium",
+          "textureImpact": "Denser, nuttier, more fiber",
+          "whenNotToUse": ["Light, fluffy cakes", "Delicate pastries", "When gluten-free required"],
+          "notes": "Use 3/4 cup whole wheat + 1/4 cup all-purpose for best results. 100% whole wheat will be dense.",
+          "addOns": ["Add 2 tbsp extra liquid per cup"],
+          "affiliateKeywords": ["whole wheat flour"]
+        },
+        {
+          "id": "oat_flour",
+          "name": "oat_flour",
+          "displayName": "Oat Flour",
+          "baseRatio": { "amount": 1.33, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "vegetarian", "dairy-free"],
+          "goals": ["structure", "binding", "moisture"],
+          "bestIn": ["cookies", "pancakes", "muffins"],
+          "avoidIn": ["bread"],
+          "tasteImpact": "low",
+          "textureImpact": "Slightly denser, tender crumb",
+          "whenNotToUse": ["Yeast breads", "When strict gluten-free required (check source)", "Very delicate cakes"],
+          "notes": "Use 1 1/3 cups oat flour per 1 cup all-purpose. Make your own by blending rolled oats.",
+          "addOns": [],
+          "affiliateKeywords": ["oat flour", "rolled oats"]
+        },
+        {
+          "id": "almond_flour",
+          "name": "almond_flour",
+          "displayName": "Almond Flour",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "gluten-free", "dairy-free", "keto"],
+          "goals": ["moisture", "richness"],
+          "bestIn": ["cookies", "brownies", "muffins"],
+          "avoidIn": ["bread", "cake"],
+          "tasteImpact": "medium",
+          "textureImpact": "Dense, moist, doesn't rise well",
+          "whenNotToUse": ["Nut allergies", "Recipes needing rise", "Light and airy textures"],
+          "notes": "Best combined with other flours. For 100% almond flour recipes, add extra egg or binding agent.",
+          "addOns": ["Add 1/4 tsp xanthan gum per cup", "Add extra egg for structure"],
+          "affiliateKeywords": ["almond flour", "blanched almond flour"]
+        },
+        {
+          "id": "coconut_flour",
+          "name": "coconut_flour",
+          "displayName": "Coconut Flour",
+          "baseRatio": { "amount": 0.25, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "gluten-free", "dairy-free", "keto", "nut-free"],
+          "goals": ["structure"],
+          "bestIn": ["pancakes", "muffins"],
+          "avoidIn": ["bread", "cake", "cookies"],
+          "tasteImpact": "medium",
+          "textureImpact": "Very absorbent, dense, coconut flavor",
+          "whenNotToUse": ["When coconut flavor is unwanted", "Without additional eggs/liquid"],
+          "notes": "Use 1/4 cup coconut flour per 1 cup all-purpose AND add 1 extra egg per 1/4 cup coconut flour.",
+          "addOns": ["Add 1 extra egg per 1/4 cup coconut flour", "Add 1/4 cup extra liquid"],
+          "affiliateKeywords": ["coconut flour"]
+        },
+        {
+          "id": "gluten_free_blend",
+          "name": "gluten_free_blend",
+          "displayName": "Gluten-Free Flour Blend",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "gluten-free", "dairy-free"],
+          "goals": ["structure", "binding"],
+          "bestIn": ["cake", "cookies", "muffins", "pancakes", "brownies"],
+          "avoidIn": [],
+          "tasteImpact": "low",
+          "textureImpact": "Similar to all-purpose when blend includes xanthan gum",
+          "whenNotToUse": ["Traditional bread (use bread-specific GF flour)"],
+          "notes": "Use 1:1 baking blends that include xanthan gum. Brands like Bob's Red Mill 1-to-1, King Arthur Measure for Measure.",
+          "addOns": ["Add 1/4 tsp xanthan gum if blend doesn't contain it"],
+          "affiliateKeywords": ["gluten-free flour", "Bob's Red Mill GF", "King Arthur gluten-free"]
+        },
+        {
+          "id": "rice_flour",
+          "name": "rice_flour",
+          "displayName": "Rice Flour",
+          "baseRatio": { "amount": 0.875, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "gluten-free", "dairy-free", "nut-free"],
+          "goals": ["structure"],
+          "bestIn": ["pancakes", "cookies", "brownies"],
+          "avoidIn": ["bread", "cake"],
+          "tasteImpact": "none",
+          "textureImpact": "Slightly gritty, crumbly without binder",
+          "whenNotToUse": ["Without additional binder", "When smooth texture is critical"],
+          "notes": "Use 7/8 cup rice flour per 1 cup all-purpose. Best combined with other flours and a binder.",
+          "addOns": ["Add 1/2 tsp xanthan gum per cup"],
+          "affiliateKeywords": ["rice flour", "white rice flour"]
+        }
+      ],
+      "faqItems": [
+        {
+          "question": "What is the best gluten-free substitute for all-purpose flour?",
+          "answer": "A 1:1 gluten-free baking blend (like Bob's Red Mill or King Arthur Measure for Measure) is the easiest substitute. These blends contain xanthan gum for binding and work cup-for-cup in most recipes."
+        },
+        {
+          "question": "Can I use almond flour instead of all-purpose flour?",
+          "answer": "Almond flour can replace all-purpose flour 1:1 in some recipes, but results will be denser and won't rise as well. It works best for cookies and brownies. Add extra egg for structure."
+        },
+        {
+          "question": "How do I substitute coconut flour for all-purpose?",
+          "answer": "Use 1/4 cup coconut flour for every 1 cup all-purpose flour. Coconut flour is very absorbent, so add 1 extra egg and 1/4 cup extra liquid per 1/4 cup of coconut flour used."
+        },
+        {
+          "question": "Can I make my own oat flour?",
+          "answer": "Yes, blend rolled oats in a blender or food processor until fine. Use 1 1/3 cups oat flour to replace 1 cup all-purpose flour. Note that oat flour may contain gluten from cross-contamination."
+        }
+      ]
+    },
+    {
+      "id": "self_rising_flour",
+      "name": "self_rising_flour",
+      "displayName": "Self-Rising Flour",
+      "cluster": "flour_butter",
+      "defaultUnit": "cup",
+      "alternateUnits": ["g", "tbsp"],
+      "commonContexts": ["cake", "pancakes", "muffins", "brownies"],
+      "substitutes": [
+        {
+          "id": "ap_flour_leavening",
+          "name": "ap_flour_leavening",
+          "displayName": "All-Purpose Flour + Leavening",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "vegetarian", "dairy-free"],
+          "goals": ["leavening", "structure"],
+          "bestIn": ["cake", "pancakes", "muffins", "brownies"],
+          "avoidIn": [],
+          "tasteImpact": "none",
+          "textureImpact": "Identical when mixed correctly",
+          "whenNotToUse": [],
+          "notes": "Mix 1 cup all-purpose flour + 1.5 tsp baking powder + 1/4 tsp salt. This IS self-rising flour.",
+          "addOns": [],
+          "affiliateKeywords": ["all-purpose flour", "baking powder"]
+        },
+        {
+          "id": "cake_flour_leavening",
+          "name": "cake_flour_leavening",
+          "displayName": "Cake Flour + Leavening",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "vegetarian", "dairy-free"],
+          "goals": ["leavening", "structure", "tenderness"],
+          "bestIn": ["cake", "cupcakes", "muffins"],
+          "avoidIn": ["bread", "cookies"],
+          "tasteImpact": "none",
+          "textureImpact": "Lighter, more tender than all-purpose version",
+          "whenNotToUse": ["When structure is critical"],
+          "notes": "Mix 1 cup cake flour + 1.5 tsp baking powder + 1/4 tsp salt. Creates lighter texture.",
+          "addOns": [],
+          "affiliateKeywords": ["cake flour"]
+        }
+      ],
+      "faqItems": [
+        {
+          "question": "How do I make self-rising flour at home?",
+          "answer": "Mix 1 cup all-purpose flour + 1½ teaspoons baking powder + ¼ teaspoon salt. Whisk well to distribute evenly. This creates an exact substitute for self-rising flour."
+        },
+        {
+          "question": "Can I use all-purpose flour instead of self-rising?",
+          "answer": "Yes, add 1½ teaspoons baking powder and ¼ teaspoon salt per cup of all-purpose flour. If your recipe already contains leavening, adjust accordingly."
+        },
+        {
+          "question": "What's the difference between self-rising and all-purpose flour?",
+          "answer": "Self-rising flour contains baking powder and salt pre-mixed. It's convenient for quick breads and pancakes. All-purpose flour is plain flour without leavening agents."
+        }
+      ]
+    },
+    {
+      "id": "cake_flour",
+      "name": "cake_flour",
+      "displayName": "Cake Flour",
+      "cluster": "flour_butter",
+      "defaultUnit": "cup",
+      "alternateUnits": ["g", "tbsp"],
+      "commonContexts": ["cake", "cupcakes"],
+      "substitutes": [
+        {
+          "id": "ap_cornstarch",
+          "name": "ap_cornstarch",
+          "displayName": "All-Purpose Flour + Cornstarch",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "vegetarian", "dairy-free"],
+          "goals": ["tenderness", "structure"],
+          "bestIn": ["cake", "cupcakes"],
+          "avoidIn": [],
+          "tasteImpact": "none",
+          "textureImpact": "Very close to cake flour - light and tender",
+          "whenNotToUse": [],
+          "notes": "Remove 2 tbsp from 1 cup all-purpose flour, replace with 2 tbsp cornstarch. Sift twice.",
+          "addOns": [],
+          "affiliateKeywords": ["cornstarch"]
+        },
+        {
+          "id": "pastry_flour",
+          "name": "pastry_flour",
+          "displayName": "Pastry Flour",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "vegetarian", "dairy-free"],
+          "goals": ["tenderness", "structure"],
+          "bestIn": ["cake", "cupcakes", "muffins"],
+          "avoidIn": [],
+          "tasteImpact": "none",
+          "textureImpact": "Slightly less tender than cake flour",
+          "whenNotToUse": [],
+          "notes": "Pastry flour has protein content between all-purpose and cake flour. Use 1:1.",
+          "addOns": [],
+          "affiliateKeywords": ["pastry flour"]
+        }
+      ],
+      "faqItems": [
+        {
+          "question": "How do I make cake flour from all-purpose?",
+          "answer": "For each cup of cake flour needed: measure 1 cup all-purpose flour, remove 2 tablespoons, and replace with 2 tablespoons cornstarch. Sift together twice for best results."
+        },
+        {
+          "question": "Why does cake flour make cakes lighter?",
+          "answer": "Cake flour has lower protein (7-8%) than all-purpose (10-12%), creating less gluten development. This results in a more tender, delicate crumb in cakes."
+        }
+      ]
+    },
+    {
+      "id": "bread_flour",
+      "name": "bread_flour",
+      "displayName": "Bread Flour",
+      "cluster": "flour_butter",
+      "defaultUnit": "cup",
+      "alternateUnits": ["g", "tbsp"],
+      "commonContexts": ["bread"],
+      "substitutes": [
+        {
+          "id": "ap_flour_bread",
+          "name": "ap_flour_bread",
+          "displayName": "All-Purpose Flour",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "vegetarian", "dairy-free"],
+          "goals": ["structure", "chewy"],
+          "bestIn": ["bread"],
+          "avoidIn": [],
+          "tasteImpact": "none",
+          "textureImpact": "Slightly less chewy, still good results",
+          "whenNotToUse": [],
+          "notes": "All-purpose works in most bread recipes. Result will be slightly less chewy. Add 1 tsp vital wheat gluten per cup for closer match.",
+          "addOns": ["Add 1 tsp vital wheat gluten per cup"],
+          "affiliateKeywords": ["vital wheat gluten"]
+        },
+        {
+          "id": "ap_gluten",
+          "name": "ap_gluten",
+          "displayName": "All-Purpose + Vital Wheat Gluten",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "vegetarian", "dairy-free"],
+          "goals": ["structure", "chewy"],
+          "bestIn": ["bread"],
+          "avoidIn": [],
+          "tasteImpact": "none",
+          "textureImpact": "Very close to bread flour",
+          "whenNotToUse": ["Gluten-free requirements"],
+          "notes": "Add 1 teaspoon vital wheat gluten per cup of all-purpose flour for bread flour equivalent.",
+          "addOns": [],
+          "affiliateKeywords": ["vital wheat gluten"]
+        }
+      ],
+      "faqItems": [
+        {
+          "question": "Can I use all-purpose flour for bread?",
+          "answer": "Yes, all-purpose flour works for most bread recipes. The bread will be slightly less chewy. For a closer match, add 1 teaspoon vital wheat gluten per cup of flour."
+        },
+        {
+          "question": "What's the difference between bread flour and all-purpose?",
+          "answer": "Bread flour has higher protein (12-14%) than all-purpose (10-12%), creating more gluten for chewier, better-rising bread. The difference is noticeable but not critical for home baking."
+        }
+      ]
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "displayName": "Butter",
+      "cluster": "flour_butter",
+      "defaultUnit": "cup",
+      "alternateUnits": ["tbsp", "g"],
+      "commonContexts": ["cookies", "cake", "brownies", "frosting", "bread"],
+      "substitutes": [
+        {
+          "id": "coconut_oil",
+          "name": "coconut_oil",
+          "displayName": "Coconut Oil",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "dairy-free", "gluten-free"],
+          "goals": ["richness", "moisture"],
+          "bestIn": ["cookies", "brownies", "muffins"],
+          "avoidIn": ["frosting"],
+          "tasteImpact": "medium",
+          "textureImpact": "Similar to butter, slight coconut flavor",
+          "whenNotToUse": ["When coconut flavor is unwanted", "Frostings (different melting point)"],
+          "notes": "Use refined coconut oil for neutral flavor. Solid at room temp like butter. Works 1:1 in most baking.",
+          "addOns": [],
+          "affiliateKeywords": ["coconut oil", "refined coconut oil"]
+        },
+        {
+          "id": "vegetable_oil",
+          "name": "vegetable_oil",
+          "displayName": "Vegetable Oil",
+          "baseRatio": { "amount": 0.75, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "dairy-free", "gluten-free", "nut-free"],
+          "goals": ["moisture"],
+          "bestIn": ["cake", "brownies", "muffins"],
+          "avoidIn": ["cookies", "frosting"],
+          "tasteImpact": "none",
+          "textureImpact": "Moister, doesn't cream, different texture",
+          "whenNotToUse": ["Recipes requiring creaming", "Cookies (will spread too much)", "Frostings"],
+          "notes": "Use 3/4 cup oil per 1 cup butter. Oil creates moister cakes but doesn't cream. Add 1 tbsp for richness.",
+          "addOns": [],
+          "affiliateKeywords": ["vegetable oil", "canola oil"]
+        },
+        {
+          "id": "vegan_butter",
+          "name": "vegan_butter",
+          "displayName": "Vegan Butter",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "dairy-free", "gluten-free"],
+          "goals": ["richness", "moisture", "browning"],
+          "bestIn": ["cookies", "cake", "brownies", "frosting", "bread"],
+          "avoidIn": [],
+          "tasteImpact": "low",
+          "textureImpact": "Very similar to butter",
+          "whenNotToUse": ["When whole-food ingredients preferred", "Soy allergies (check brand)"],
+          "notes": "Use 1:1. Brands like Earth Balance, Miyoko's. Look for stick form for baking. Works exactly like butter.",
+          "addOns": [],
+          "affiliateKeywords": ["vegan butter", "Earth Balance", "Miyoko's butter"]
+        },
+        {
+          "id": "applesauce_butter",
+          "name": "applesauce_butter",
+          "displayName": "Unsweetened Applesauce",
+          "baseRatio": { "amount": 0.5, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "dairy-free", "gluten-free", "nut-free"],
+          "goals": ["moisture"],
+          "bestIn": ["cake", "muffins"],
+          "avoidIn": ["cookies", "brownies", "frosting"],
+          "tasteImpact": "low",
+          "textureImpact": "Moister, less rich, lower fat",
+          "whenNotToUse": ["When richness is needed", "Cookies", "Brownies", "When fruit flavor unwanted"],
+          "notes": "Use 1/2 cup applesauce per 1 cup butter. Reduces fat significantly. Best for cakes and muffins only.",
+          "addOns": [],
+          "affiliateKeywords": ["unsweetened applesauce"]
+        },
+        {
+          "id": "greek_yogurt_butter",
+          "name": "greek_yogurt_butter",
+          "displayName": "Greek Yogurt",
+          "baseRatio": { "amount": 0.5, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegetarian", "gluten-free", "nut-free"],
+          "goals": ["moisture", "tenderness"],
+          "bestIn": ["cake", "muffins"],
+          "avoidIn": ["cookies", "frosting"],
+          "tasteImpact": "low",
+          "textureImpact": "Moist, tender, slight tang",
+          "whenNotToUse": ["Vegan recipes", "Cookies", "When tang is unwanted"],
+          "notes": "Use 1/2 cup Greek yogurt per 1 cup butter. Adds protein and tenderness with less fat.",
+          "addOns": ["Add 1/4 tsp baking soda per 1/2 cup yogurt"],
+          "affiliateKeywords": ["greek yogurt"]
+        },
+        {
+          "id": "avocado_butter",
+          "name": "avocado_butter",
+          "displayName": "Mashed Avocado",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "dairy-free", "gluten-free", "nut-free"],
+          "goals": ["moisture", "richness"],
+          "bestIn": ["brownies", "cake"],
+          "avoidIn": ["cookies", "frosting", "bread"],
+          "tasteImpact": "low",
+          "textureImpact": "Dense, fudgy, very moist",
+          "whenNotToUse": ["Light-colored batters (adds green tint)", "Cookies", "When avocado is unavailable"],
+          "notes": "Use ripe avocado mashed smooth. Works best in chocolate recipes where color isn't visible.",
+          "addOns": [],
+          "affiliateKeywords": []
+        },
+        {
+          "id": "margarine",
+          "name": "margarine",
+          "displayName": "Margarine",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["dairy-free", "gluten-free"],
+          "goals": ["richness", "moisture"],
+          "bestIn": ["cookies", "cake", "brownies"],
+          "avoidIn": [],
+          "tasteImpact": "low",
+          "textureImpact": "Slightly softer cookies, similar cakes",
+          "whenNotToUse": ["Vegan (check label)", "When butter flavor is critical"],
+          "notes": "Use stick margarine (not tub spread). Works 1:1 but cookies may spread more. Check labels for dairy.",
+          "addOns": [],
+          "affiliateKeywords": ["margarine"]
+        }
+      ],
+      "faqItems": [
+        {
+          "question": "What is the best vegan substitute for butter in baking?",
+          "answer": "Vegan butter (like Earth Balance or Miyoko's) is the best 1:1 substitute as it behaves exactly like butter. For a whole-food option, coconut oil works well in cookies and brownies."
+        },
+        {
+          "question": "Can I use oil instead of butter in cookies?",
+          "answer": "Oil is not recommended for cookies as they will spread too much and lose their shape. Cookies need solid fat for structure. Use coconut oil or vegan butter instead."
+        },
+        {
+          "question": "How much oil equals 1 cup of butter?",
+          "answer": "Use 3/4 cup (12 tablespoons) of oil to replace 1 cup of butter. Oil creates moister results but doesn't work in recipes that require creaming butter with sugar."
+        },
+        {
+          "question": "Can I substitute butter with applesauce?",
+          "answer": "Yes, use 1/2 cup unsweetened applesauce per 1 cup butter. This works for cakes and muffins but not cookies or brownies. The result will be less rich but lower in fat."
+        },
+        {
+          "question": "What's the best butter substitute for frosting?",
+          "answer": "Vegan butter is the only reliable substitute for frosting as it has the same consistency and behavior as dairy butter. Coconut oil and other alternatives won't produce proper frosting texture."
+        }
+      ]
+    }
+  ]
+}

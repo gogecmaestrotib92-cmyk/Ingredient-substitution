@@ -1,0 +1,391 @@
+{
+  "ingredients": [
+    {
+      "id": "milk",
+      "name": "milk",
+      "displayName": "Milk",
+      "cluster": "milk_cream",
+      "defaultUnit": "cup",
+      "alternateUnits": ["ml", "tbsp"],
+      "commonContexts": ["cake", "pancakes", "bread", "mac_and_cheese", "mashed_potatoes", "brownies", "muffins", "waffles"],
+      "substitutes": [
+        {
+          "id": "oat_milk",
+          "name": "oat_milk",
+          "displayName": "Oat Milk",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "dairy-free", "nut-free"],
+          "goals": ["moisture", "richness"],
+          "bestIn": ["cake", "pancakes", "muffins", "bread", "brownies", "mac_and_cheese"],
+          "avoidIn": [],
+          "tasteImpact": "low",
+          "textureImpact": "Creamy, slightly sweet, very similar to dairy milk",
+          "whenNotToUse": ["Oat allergy present", "Strict gluten-free (check brand)"],
+          "notes": "Best 1:1 dairy milk substitute. Creamy texture works in most recipes. Choose unsweetened for savory dishes.",
+          "addOns": [],
+          "affiliateKeywords": ["oat milk", "Oatly"]
+        },
+        {
+          "id": "soy_milk",
+          "name": "soy_milk",
+          "displayName": "Soy Milk",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "dairy-free", "gluten-free", "nut-free"],
+          "goals": ["moisture", "richness", "browning"],
+          "bestIn": ["cake", "pancakes", "bread", "muffins", "mac_and_cheese", "brownies"],
+          "avoidIn": [],
+          "tasteImpact": "low",
+          "textureImpact": "Similar protein content to dairy, good browning",
+          "whenNotToUse": ["Soy allergy", "When neutral flavor is critical"],
+          "notes": "Highest protein plant milk, best for browning. Use unsweetened, unflavored for savory recipes.",
+          "addOns": [],
+          "affiliateKeywords": ["soy milk"]
+        },
+        {
+          "id": "almond_milk",
+          "name": "almond_milk",
+          "displayName": "Almond Milk",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "dairy-free", "gluten-free"],
+          "goals": ["moisture"],
+          "bestIn": ["pancakes", "muffins", "cake", "brownies"],
+          "avoidIn": ["bread", "mac_and_cheese"],
+          "tasteImpact": "low",
+          "textureImpact": "Thinner than dairy milk, subtle nutty flavor",
+          "whenNotToUse": ["Nut allergies", "When richness is needed", "Yeast breads"],
+          "notes": "Thinner consistency than dairy milk. Works well in sweet baking but may be too thin for creamy sauces.",
+          "addOns": ["Add 1 tbsp oil per cup for richness"],
+          "affiliateKeywords": ["almond milk"]
+        },
+        {
+          "id": "coconut_milk_beverage",
+          "name": "coconut_milk_beverage",
+          "displayName": "Coconut Milk (Carton)",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "dairy-free", "gluten-free", "nut-free"],
+          "goals": ["moisture", "richness"],
+          "bestIn": ["cake", "pancakes", "muffins", "brownies"],
+          "avoidIn": ["mac_and_cheese", "mashed_potatoes"],
+          "tasteImpact": "medium",
+          "textureImpact": "Creamy with noticeable coconut flavor",
+          "whenNotToUse": ["When coconut flavor is unwanted", "Savory dishes where coconut doesn't fit"],
+          "notes": "Use the carton beverage version (not canned). Adds tropical flavor that works well in sweet baking.",
+          "addOns": [],
+          "affiliateKeywords": ["coconut milk"]
+        },
+        {
+          "id": "evaporated_milk",
+          "name": "evaporated_milk",
+          "displayName": "Evaporated Milk (Diluted)",
+          "baseRatio": { "amount": 0.5, "unit": "cup", "perUnit": "cup" },
+          "contextOverrides": [
+            { "context": "mac_and_cheese", "ratio": { "amount": 0.5, "unit": "cup" }, "notes": "Mix with 1/2 cup water for creamier sauce" }
+          ],
+          "dietTags": ["vegetarian", "gluten-free"],
+          "goals": ["richness", "browning"],
+          "bestIn": ["mac_and_cheese", "mashed_potatoes", "cake", "bread"],
+          "avoidIn": [],
+          "tasteImpact": "low",
+          "textureImpact": "Richer, creamier than regular milk",
+          "whenNotToUse": ["Vegan recipes", "Dairy-free requirements"],
+          "notes": "Mix 1/2 cup evaporated milk + 1/2 cup water to replace 1 cup milk. Creates richer results.",
+          "addOns": [],
+          "affiliateKeywords": ["evaporated milk"]
+        },
+        {
+          "id": "yogurt_thinned",
+          "name": "yogurt_thinned",
+          "displayName": "Yogurt + Water",
+          "baseRatio": { "amount": 0.75, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegetarian", "gluten-free"],
+          "goals": ["moisture", "tenderness"],
+          "bestIn": ["cake", "muffins", "pancakes"],
+          "avoidIn": ["mac_and_cheese", "bread"],
+          "tasteImpact": "low",
+          "textureImpact": "Tender crumb with slight tang",
+          "whenNotToUse": ["Vegan recipes", "When tang is unwanted"],
+          "notes": "Mix 3/4 cup yogurt + 1/4 cup water. The acidity tenderizes gluten for softer baked goods.",
+          "addOns": ["Add 1/4 tsp baking soda to neutralize acidity"],
+          "affiliateKeywords": ["plain yogurt"]
+        },
+        {
+          "id": "water_butter",
+          "name": "water_butter",
+          "displayName": "Water + Butter",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegetarian", "gluten-free"],
+          "goals": ["moisture", "richness"],
+          "bestIn": ["cake", "brownies", "muffins"],
+          "avoidIn": ["pancakes"],
+          "tasteImpact": "low",
+          "textureImpact": "Similar richness to whole milk",
+          "whenNotToUse": ["Vegan recipes", "Dairy-free requirements", "When trying to reduce fat"],
+          "notes": "Mix 1 cup water + 1 tbsp melted butter to approximate whole milk's fat content.",
+          "addOns": [],
+          "affiliateKeywords": []
+        }
+      ],
+      "faqItems": [
+        {
+          "question": "What is the best milk substitute for baking?",
+          "answer": "Oat milk is the best overall milk substitute for baking. It has a creamy texture, neutral flavor, and works as a 1:1 replacement in most recipes including cakes, muffins, and pancakes."
+        },
+        {
+          "question": "Can I use water instead of milk in cake?",
+          "answer": "Yes, but add 1 tablespoon of melted butter per cup of water to replace the fat content. This will help maintain moisture and richness in your cake."
+        },
+        {
+          "question": "What milk substitute works for mac and cheese?",
+          "answer": "Oat milk or soy milk work best for mac and cheese as they're creamy and neutral. Avoid almond milk as it's too thin. For extra richness, use evaporated milk diluted with water."
+        },
+        {
+          "question": "Is almond milk good for baking?",
+          "answer": "Almond milk works for baking but is thinner than dairy milk. It's best for pancakes and muffins. For richer recipes, add 1 tablespoon of oil per cup or choose oat milk instead."
+        }
+      ]
+    },
+    {
+      "id": "heavy_cream",
+      "name": "heavy_cream",
+      "displayName": "Heavy Cream",
+      "cluster": "milk_cream",
+      "defaultUnit": "cup",
+      "alternateUnits": ["ml", "tbsp"],
+      "commonContexts": ["pasta", "soup", "sauce", "frosting"],
+      "substitutes": [
+        {
+          "id": "coconut_cream",
+          "name": "coconut_cream",
+          "displayName": "Coconut Cream",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "dairy-free", "gluten-free"],
+          "goals": ["richness", "moisture"],
+          "bestIn": ["pasta", "soup", "sauce", "frosting"],
+          "avoidIn": [],
+          "tasteImpact": "medium",
+          "textureImpact": "Very rich and creamy with coconut flavor",
+          "whenNotToUse": ["When coconut flavor is unwanted", "Traditional Italian pasta dishes"],
+          "notes": "Use the thick cream from top of chilled canned coconut milk. Excellent for vegan whipped cream.",
+          "addOns": [],
+          "affiliateKeywords": ["coconut cream", "canned coconut milk"]
+        },
+        {
+          "id": "cashew_cream",
+          "name": "cashew_cream",
+          "displayName": "Cashew Cream",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "dairy-free", "gluten-free"],
+          "goals": ["richness", "moisture"],
+          "bestIn": ["pasta", "soup", "sauce"],
+          "avoidIn": ["frosting"],
+          "tasteImpact": "low",
+          "textureImpact": "Smooth, neutral, creamy",
+          "whenNotToUse": ["Nut allergies", "When completely smooth texture is required without blending"],
+          "notes": "Blend 1 cup soaked raw cashews with 1/2 cup water until smooth. Most neutral-tasting vegan cream.",
+          "addOns": [],
+          "affiliateKeywords": ["raw cashews"]
+        },
+        {
+          "id": "milk_butter_cream",
+          "name": "milk_butter_cream",
+          "displayName": "Milk + Butter",
+          "baseRatio": { "amount": 0.75, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegetarian", "gluten-free"],
+          "goals": ["richness", "moisture"],
+          "bestIn": ["pasta", "soup", "sauce"],
+          "avoidIn": ["frosting"],
+          "tasteImpact": "none",
+          "textureImpact": "Close to heavy cream but won't whip",
+          "whenNotToUse": ["Recipes requiring whipped cream", "Vegan recipes"],
+          "notes": "Mix 3/4 cup whole milk + 1/4 cup melted butter. Works for cooking but cannot be whipped.",
+          "addOns": [],
+          "affiliateKeywords": []
+        },
+        {
+          "id": "half_and_half",
+          "name": "half_and_half",
+          "displayName": "Half and Half",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegetarian", "gluten-free"],
+          "goals": ["richness", "moisture"],
+          "bestIn": ["pasta", "soup", "sauce"],
+          "avoidIn": ["frosting"],
+          "tasteImpact": "none",
+          "textureImpact": "Lighter than heavy cream, won't whip",
+          "whenNotToUse": ["Recipes requiring whipped cream", "When maximum richness is needed"],
+          "notes": "Use 1:1 ratio. Result will be lighter than heavy cream. Add 1 tbsp butter for extra richness.",
+          "addOns": ["Add 1 tbsp butter per cup for extra richness"],
+          "affiliateKeywords": []
+        },
+        {
+          "id": "silken_tofu_cream",
+          "name": "silken_tofu_cream",
+          "displayName": "Blended Silken Tofu",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "dairy-free", "gluten-free"],
+          "goals": ["richness", "moisture"],
+          "bestIn": ["pasta", "soup", "sauce"],
+          "avoidIn": ["frosting"],
+          "tasteImpact": "low",
+          "textureImpact": "Smooth and creamy when blended well",
+          "whenNotToUse": ["Soy allergies", "Recipes requiring whipped cream"],
+          "notes": "Blend silken tofu until completely smooth. Add salt and a splash of lemon for tang.",
+          "addOns": ["Add 1 tbsp oil for extra richness"],
+          "affiliateKeywords": ["silken tofu"]
+        },
+        {
+          "id": "greek_yogurt_cream",
+          "name": "greek_yogurt_cream",
+          "displayName": "Greek Yogurt",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegetarian", "gluten-free"],
+          "goals": ["richness", "moisture", "tenderness"],
+          "bestIn": ["sauce", "soup"],
+          "avoidIn": ["pasta", "frosting"],
+          "tasteImpact": "medium",
+          "textureImpact": "Tangy, thick, may curdle if boiled",
+          "whenNotToUse": ["Recipes requiring boiling", "When tang is unwanted", "Vegan recipes"],
+          "notes": "Add at end of cooking, don't boil or it may curdle. Adds protein and tang.",
+          "addOns": [],
+          "affiliateKeywords": ["greek yogurt"]
+        }
+      ],
+      "faqItems": [
+        {
+          "question": "What can I substitute for heavy cream in pasta?",
+          "answer": "For pasta, use coconut cream for a vegan option (1:1), or milk + butter (3/4 cup milk + 1/4 cup melted butter per cup of heavy cream). Cashew cream also works well and has a neutral flavor."
+        },
+        {
+          "question": "Can I use milk instead of heavy cream?",
+          "answer": "Yes, but add butter to compensate for fat content. Mix 3/4 cup whole milk with 1/4 cup melted butter to replace 1 cup heavy cream. Note: this won't whip."
+        },
+        {
+          "question": "What is a dairy-free heavy cream substitute?",
+          "answer": "Coconut cream is the best dairy-free substitute as it's rich and can be whipped. For savory dishes, cashew cream (soaked cashews blended with water) provides a neutral flavor."
+        },
+        {
+          "question": "How do I make vegan whipped cream?",
+          "answer": "Chill a can of full-fat coconut milk overnight. Scoop out the solid cream, add powdered sugar, and whip until fluffy. This creates a dairy-free whipped cream substitute."
+        }
+      ]
+    },
+    {
+      "id": "half_and_half",
+      "name": "half_and_half",
+      "displayName": "Half and Half",
+      "cluster": "milk_cream",
+      "defaultUnit": "cup",
+      "alternateUnits": ["ml", "tbsp"],
+      "commonContexts": ["pasta", "soup", "sauce", "mashed_potatoes"],
+      "substitutes": [
+        {
+          "id": "milk_cream_mix",
+          "name": "milk_cream_mix",
+          "displayName": "Milk + Heavy Cream",
+          "baseRatio": { "amount": 0.5, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegetarian", "gluten-free"],
+          "goals": ["richness", "moisture"],
+          "bestIn": ["pasta", "soup", "sauce", "mashed_potatoes"],
+          "avoidIn": [],
+          "tasteImpact": "none",
+          "textureImpact": "Identical to half and half",
+          "whenNotToUse": ["Vegan recipes", "Dairy-free requirements"],
+          "notes": "Mix 1/2 cup whole milk + 1/2 cup heavy cream. This IS half and half.",
+          "addOns": [],
+          "affiliateKeywords": []
+        },
+        {
+          "id": "milk_butter_half",
+          "name": "milk_butter_half",
+          "displayName": "Milk + Butter",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegetarian", "gluten-free"],
+          "goals": ["richness", "moisture"],
+          "bestIn": ["pasta", "soup", "sauce", "mashed_potatoes"],
+          "avoidIn": [],
+          "tasteImpact": "none",
+          "textureImpact": "Similar richness",
+          "whenNotToUse": ["Vegan recipes"],
+          "notes": "Mix 7/8 cup milk + 1/8 cup (2 tbsp) melted butter. Good when you don't have cream.",
+          "addOns": [],
+          "affiliateKeywords": []
+        },
+        {
+          "id": "oat_creamer",
+          "name": "oat_creamer",
+          "displayName": "Oat Milk Creamer",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "dairy-free"],
+          "goals": ["richness", "moisture"],
+          "bestIn": ["pasta", "soup", "sauce"],
+          "avoidIn": [],
+          "tasteImpact": "low",
+          "textureImpact": "Creamy, slightly sweet",
+          "whenNotToUse": ["Oat allergies", "Strictly gluten-free"],
+          "notes": "Oat-based creamers are thicker than regular oat milk. Great vegan option.",
+          "addOns": [],
+          "affiliateKeywords": ["oat creamer", "Oatly creamer"]
+        }
+      ],
+      "faqItems": [
+        {
+          "question": "What can I use instead of half and half?",
+          "answer": "The best substitute is mixing equal parts whole milk and heavy cream. If you don't have heavy cream, mix 7/8 cup milk with 2 tablespoons melted butter."
+        },
+        {
+          "question": "Is half and half the same as heavy cream?",
+          "answer": "No, half and half contains about 12% fat while heavy cream has 36% fat. Half and half is lighter and won't whip, but works well in sauces and coffee."
+        }
+      ]
+    },
+    {
+      "id": "whipping_cream",
+      "name": "whipping_cream",
+      "displayName": "Whipping Cream",
+      "cluster": "milk_cream",
+      "defaultUnit": "cup",
+      "alternateUnits": ["ml", "tbsp"],
+      "commonContexts": ["frosting", "sauce", "soup"],
+      "substitutes": [
+        {
+          "id": "heavy_cream_whip",
+          "name": "heavy_cream_whip",
+          "displayName": "Heavy Cream",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegetarian", "gluten-free"],
+          "goals": ["richness"],
+          "bestIn": ["frosting", "sauce", "soup"],
+          "avoidIn": [],
+          "tasteImpact": "none",
+          "textureImpact": "Richer, whips to stiffer peaks",
+          "whenNotToUse": ["When lighter texture desired"],
+          "notes": "Heavy cream has more fat (36% vs 30%) so it whips to stiffer peaks and is richer.",
+          "addOns": [],
+          "affiliateKeywords": []
+        },
+        {
+          "id": "coconut_whip",
+          "name": "coconut_whip",
+          "displayName": "Coconut Cream (Whippable)",
+          "baseRatio": { "amount": 1, "unit": "cup", "perUnit": "cup" },
+          "dietTags": ["vegan", "dairy-free", "gluten-free"],
+          "goals": ["richness"],
+          "bestIn": ["frosting"],
+          "avoidIn": ["sauce", "soup"],
+          "tasteImpact": "medium",
+          "textureImpact": "Light, fluffy with coconut flavor",
+          "whenNotToUse": ["When coconut flavor is unwanted", "Savory dishes"],
+          "notes": "Chill coconut cream overnight, then whip. Add powdered sugar for sweetened whipped cream.",
+          "addOns": ["Add 1/2 tsp vanilla for flavor"],
+          "affiliateKeywords": ["coconut cream"]
+        }
+      ],
+      "faqItems": [
+        {
+          "question": "Can I use heavy cream instead of whipping cream?",
+          "answer": "Yes, heavy cream and whipping cream are interchangeable. Heavy cream has slightly more fat (36% vs 30%) so it whips to stiffer peaks but works in all the same applications."
+        }
+      ]
+    }
+  ]
+}
