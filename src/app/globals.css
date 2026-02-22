@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* CSS Design Tokens */
+:root {
+  --bg: #fafafa;
+  --bg-elevated: #ffffff;
+  --card: #ffffff;
+  --text: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
+  --accent: #16a34a;
+  --accent-light: #dcfce7;
+  --accent-dark: #15803d;
+  --warning: #f59e0b;
+  --warning-light: #fef3c7;
+  --danger: #dc2626;
+  --danger-light: #fee2e2;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -9,7 +28,31 @@
   }
   
   body {
-    @apply text-gray-800 antialiased;
+    @apply antialiased;
+    color: var(--text);
+    background-color: var(--bg);
+  }
+  
+  /* Typography improvements */
+  h1, h2, h3 {
+    @apply tracking-tight;
+    color: var(--text);
+  }
+  
+  h1 {
+    @apply text-3xl sm:text-4xl md:text-5xl font-bold leading-tight;
+  }
+  
+  h2 {
+    @apply text-xl sm:text-2xl font-semibold;
+  }
+  
+  h3 {
+    @apply text-lg sm:text-xl font-semibold;
+  }
+  
+  p {
+    color: var(--text-secondary);
   }
   
   /* Better touch targets for mobile */
@@ -24,15 +67,16 @@
   }
   
   ::-webkit-scrollbar-track {
-    @apply bg-gray-100;
+    background: var(--bg);
   }
   
   ::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 rounded-full;
+    @apply rounded-full;
+    background: var(--border);
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-400;
+    background: var(--border-hover);
   }
 }
 
@@ -52,12 +96,35 @@
   .touch-manipulation {
     touch-action: manipulation;
   }
+  
+  /* Subtle text animation on hover */
+  .text-hover-lift {
+    @apply transition-colors duration-150;
+  }
 }
 
 @layer components {
   /* Focus styles */
   .focus-ring {
     @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+  
+  /* Card base - elevated feel */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    @apply rounded-2xl shadow-sm;
+  }
+  
+  .card-interactive {
+    background: var(--card);
+    border: 1px solid var(--border);
+    @apply rounded-2xl shadow-sm transition-all duration-200;
+  }
+  
+  .card-interactive:hover {
+    border-color: var(--border-hover);
+    @apply shadow-md -translate-y-0.5;
   }
   
   /* Card hover effect */
@@ -67,11 +134,52 @@
   
   /* Chip/tag base style */
   .chip {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-colors;
+    @apply inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium transition-colors;
+  }
+  
+  .chip-primary {
+    @apply bg-primary-100 text-primary-700 hover:bg-primary-200;
+  }
+  
+  .chip-muted {
+    @apply bg-slate-100 text-slate-600;
+  }
+  
+  /* Input styling */
+  .input {
+    @apply w-full px-4 py-3 border rounded-xl text-base transition-all duration-150;
+    border-color: var(--border);
+    background: var(--card);
+  }
+  
+  .input:focus {
+    @apply outline-none ring-2 ring-primary-500/20;
+    border-color: var(--accent);
+  }
+  
+  /* Button primary */
+  .btn-primary {
+    @apply px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl;
+    @apply hover:bg-primary-700 active:bg-primary-800;
+    @apply transition-all duration-150 shadow-sm hover:shadow-md;
+  }
+  
+  /* Section spacing */
+  .section {
+    @apply py-12 sm:py-16 lg:py-20;
+  }
+  
+  /* Container */
+  .container-narrow {
+    @apply max-w-3xl mx-auto px-4 sm:px-6;
+  }
+  
+  .container-wide {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 }
 
-/* Details/summary styling */
+/* Details/summary styling for FAQ */
 details > summary {
   list-style: none;
 }
@@ -80,9 +188,26 @@ details > summary::-webkit-details-marker {
   display: none;
 }
 
+details[open] > summary {
+  border-bottom: 1px solid var(--border);
+}
+
 /* Table responsive container */
 .table-container {
   @apply overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0;
+}
+
+/* Zebra rows for tables */
+.table-zebra tbody tr:nth-child(even) {
+  background: var(--bg);
+}
+
+.table-zebra tbody tr {
+  @apply transition-colors;
+}
+
+.table-zebra tbody tr:hover {
+  background: var(--accent-light);
 }
 
 /* Print styles */

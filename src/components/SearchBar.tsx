@@ -103,47 +103,49 @@ export function SearchBar({ className = '' }: { className?: string }) {
           onKeyDown={handleKeyDown}
           onFocus={() => query && results.length > 0 && setIsOpen(true)}
           placeholder="Search (e.g., 'egg in cake')"
-          className="w-full px-4 sm:px-6 py-3 sm:py-4 text-base sm:text-lg border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all pr-10 sm:pr-12"
+          className="w-full px-5 sm:px-6 py-4 sm:py-5 text-base sm:text-lg bg-white border-2 border-slate-200 rounded-2xl focus:border-primary-500 focus:ring-4 focus:ring-primary-100 outline-none transition-all pr-12 sm:pr-14 shadow-sm hover:border-slate-300"
           aria-label="Search for ingredient substitutes"
           aria-expanded={isOpen}
           aria-controls="search-results"
           role="combobox"
         />
-        <svg
-          className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 text-gray-400"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          />
-        </svg>
+        <div className="absolute right-4 sm:right-5 top-1/2 -translate-y-1/2 w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center">
+          <svg
+            className="w-5 h-5 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+        </div>
       </div>
 
       {isOpen && (
         <div
           ref={resultsRef}
           id="search-results"
-          className="absolute z-50 w-full mt-2 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden max-h-[60vh] overflow-y-auto"
+          className="absolute z-50 w-full mt-3 bg-white border border-slate-200 rounded-2xl shadow-xl overflow-hidden max-h-[60vh] overflow-y-auto"
           role="listbox"
         >
           {results.map((result, index) => (
             <Link
               key={result.slug}
               href={`/substitute/${result.slug}/`}
-              className={`block px-3 sm:px-4 py-2.5 sm:py-3 hover:bg-primary-50 transition-colors touch-manipulation ${
+              className={`block px-5 py-3.5 hover:bg-primary-50 transition-colors touch-manipulation border-b border-slate-100 last:border-0 ${
                 index === selectedIndex ? 'bg-primary-50' : ''
               }`}
               role="option"
               aria-selected={index === selectedIndex}
               onClick={() => setIsOpen(false)}
             >
-              <div className="font-medium text-gray-900 text-sm sm:text-base truncate">{result.h1}</div>
-              <div className="text-xs sm:text-sm text-gray-500 truncate">/substitute/{result.slug}/</div>
+              <div className="font-semibold text-slate-900 text-base truncate">{result.h1}</div>
+              <div className="text-sm text-slate-500 truncate mt-0.5">/substitute/{result.slug}/</div>
             </Link>
           ))}
         </div>

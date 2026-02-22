@@ -92,21 +92,21 @@ export function Calculator({ pageSpec }: CalculatorProps) {
     : ['cup'];
 
   return (
-    <div className="bg-white rounded-xl sm:rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-      <div className="bg-primary-50 px-4 sm:px-6 py-3 sm:py-4 border-b border-primary-100">
-        <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
+    <div className="card overflow-hidden">
+      <div className="bg-gradient-to-r from-primary-50 to-primary-100/50 px-5 sm:px-6 py-4 sm:py-5 border-b border-primary-100">
+        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
           Substitution Calculator
         </h2>
-        <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1">
+        <p className="text-sm sm:text-base text-slate-600 mt-1">
           Enter your recipe details to get exact conversion amounts
         </p>
       </div>
 
-      <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+      <div className="p-5 sm:p-6 space-y-5 sm:space-y-6">
         {/* Quantity and Unit */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               Quantity
             </label>
             <input
@@ -122,17 +122,17 @@ export function Calculator({ pageSpec }: CalculatorProps) {
                   setQuantityInput('1');
                 }
               }}
-              className="w-full px-3 sm:px-4 py-2.5 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none text-base"
+              className="input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               Unit
             </label>
             <select
               value={unit}
               onChange={(e) => setUnit(e.target.value as Unit)}
-              className="w-full px-3 sm:px-4 py-2.5 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none bg-white text-base"
+              className="input cursor-pointer"
             >
               {availableUnits.map(u => (
                 <option key={u} value={u}>{u}</option>
@@ -143,13 +143,13 @@ export function Calculator({ pageSpec }: CalculatorProps) {
 
         {/* Recipe Context */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">
+          <label className="block text-sm font-semibold text-slate-700 mb-2">
             Recipe Type
           </label>
           <select
             value={context}
             onChange={(e) => setContext(e.target.value as RecipeContext)}
-            className="w-full px-3 sm:px-4 py-2.5 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none bg-white text-base"
+            className="input cursor-pointer"
           >
             {RECIPE_CONTEXTS.map(ctx => (
               <option key={ctx.value} value={ctx.value}>{ctx.label}</option>
@@ -159,13 +159,13 @@ export function Calculator({ pageSpec }: CalculatorProps) {
 
         {/* Goal */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5 sm:mb-2">
-            Primary Goal <span className="text-gray-400 font-normal">(Optional)</span>
+          <label className="block text-sm font-semibold text-slate-700 mb-2">
+            Primary Goal <span className="text-slate-400 font-normal">(Optional)</span>
           </label>
           <select
             value={goal || ''}
             onChange={(e) => setGoal(e.target.value as GoalTag || undefined)}
-            className="w-full px-3 sm:px-4 py-2.5 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none bg-white text-base"
+            className="input cursor-pointer"
           >
             <option value="">Any</option>
             {GOALS.map(g => (
@@ -176,18 +176,18 @@ export function Calculator({ pageSpec }: CalculatorProps) {
 
         {/* Dietary Filters */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-semibold text-slate-700 mb-3">
             Dietary Requirements
           </label>
-          <div className="flex flex-wrap gap-1.5 sm:gap-2">
+          <div className="flex flex-wrap gap-2">
             {DIETS.map(diet => (
               <button
                 key={diet.value}
                 onClick={() => toggleDiet(diet.value)}
-                className={`px-2.5 sm:px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium transition-colors touch-manipulation ${
+                className={`px-3 sm:px-4 py-2 rounded-full text-sm font-medium transition-all touch-manipulation ${
                   dietFilters.includes(diet.value)
-                    ? 'bg-primary-500 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200 active:bg-gray-300'
+                    ? 'bg-primary-600 text-white shadow-sm'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200 active:bg-slate-300'
                 }`}
               >
                 {diet.label}
@@ -199,12 +199,12 @@ export function Calculator({ pageSpec }: CalculatorProps) {
 
       {/* Results */}
       {output && output.results.length > 0 && (
-        <div className="border-t border-gray-200 p-4 sm:p-6">
-          <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">
+        <div className="border-t border-slate-200 bg-slate-50/50 p-5 sm:p-6">
+          <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 sm:mb-5">
             Top {output.results.length} Substitutes for {quantity} {unit}
             {quantity !== 1 ? 's' : ''}
           </h3>
-          <div className="space-y-3 sm:space-y-4">
+          <div className="space-y-4">
             {output.results.map((result) => (
               <SubstituteCard key={result.substitute.id} result={result} />
             ))}
@@ -213,13 +213,15 @@ export function Calculator({ pageSpec }: CalculatorProps) {
       )}
 
       {output && output.results.length === 0 && (
-        <div className="border-t border-gray-200 p-4 sm:p-6">
-          <div className="text-center py-6 sm:py-8 text-gray-500">
-            <svg className="w-10 sm:w-12 h-10 sm:h-12 mx-auto text-gray-300 mb-2 sm:mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M12 20a8 8 0 100-16 8 8 0 000 16z" />
-            </svg>
-            <p className="font-medium text-sm sm:text-base">No substitutes match your filters</p>
-            <p className="text-xs sm:text-sm mt-1">Try removing some dietary restrictions</p>
+        <div className="border-t border-slate-200 p-5 sm:p-6">
+          <div className="text-center py-8 sm:py-10">
+            <div className="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <svg className="w-7 h-7 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M12 20a8 8 0 100-16 8 8 0 000 16z" />
+              </svg>
+            </div>
+            <p className="font-semibold text-slate-700 text-base sm:text-lg">No substitutes match your filters</p>
+            <p className="text-slate-500 text-sm sm:text-base mt-1">Try removing some dietary restrictions</p>
           </div>
         </div>
       )}

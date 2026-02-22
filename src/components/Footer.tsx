@@ -3,32 +3,32 @@ import Image from 'next/image';
 
 export function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-400 mt-12 sm:mt-20">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+    <footer className="bg-slate-900 text-slate-400 mt-16 sm:mt-24">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1 mb-4 md:mb-0">
-            <Link href="/" className="flex items-center gap-2 mb-3 sm:mb-4">
+            <Link href="/" className="flex items-center gap-2.5 mb-4 group">
               <Image 
                 src="/icon.svg" 
                 alt="IngredientSub" 
-                width={24} 
-                height={24}
-                className="w-6 h-6 sm:w-7 sm:h-7"
+                width={28} 
+                height={28}
+                className="w-7 h-7 group-hover:scale-105 transition-transform"
               />
-              <span className="font-bold text-lg sm:text-xl text-white">
+              <span className="font-bold text-xl text-white tracking-tight">
                 Ingredient<span className="text-primary-500">Sub</span>
               </span>
             </Link>
-            <p className="text-xs sm:text-sm">
+            <p className="text-sm leading-relaxed">
               Free ingredient substitution calculator with exact conversion ratios for any recipe.
             </p>
           </div>
 
           {/* Egg Substitutes */}
           <div>
-            <h3 className="text-white font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Egg Substitutes</h3>
-            <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
+            <h3 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Egg</h3>
+            <ul className="space-y-2.5 text-sm">
               <li>
                 <Link href="/substitute/egg/" className="hover:text-white transition-colors">
                   Egg Substitute Guide
@@ -54,8 +54,8 @@ export function Footer() {
 
           {/* Dairy Substitutes */}
           <div>
-            <h3 className="text-white font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Dairy Substitutes</h3>
-            <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
+            <h3 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Dairy</h3>
+            <ul className="space-y-2.5 text-sm">
               <li>
                 <Link href="/substitute/milk/" className="hover:text-white transition-colors">
                   Milk Substitute Guide
@@ -81,8 +81,8 @@ export function Footer() {
 
           {/* Flour Substitutes */}
           <div className="col-span-2 sm:col-span-1">
-            <h3 className="text-white font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Flour Substitutes</h3>
-            <ul className="grid grid-cols-2 sm:grid-cols-1 gap-x-4 gap-y-1.5 sm:space-y-2 text-xs sm:text-sm">
+            <h3 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Flour</h3>
+            <ul className="grid grid-cols-2 sm:grid-cols-1 gap-x-4 gap-y-2.5 text-sm">
               <li>
                 <Link href="/substitute/all-purpose-flour/" className="hover:text-white transition-colors">
                   All-Purpose Flour
@@ -107,10 +107,10 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-xs sm:text-sm text-center">
-          <p>© {new Date().getFullYear()} IngredientSub. All rights reserved.</p>
-          <p className="mt-2 text-gray-500">
-            Data is for informational purposes only.
+        <div className="border-t border-slate-800 mt-10 sm:mt-12 pt-8 text-sm text-center">
+          <p className="text-slate-300">© {new Date().getFullYear()} IngredientSub. All rights reserved.</p>
+          <p className="mt-2 text-slate-500">
+            Data is for informational purposes only. Always consider allergies and dietary restrictions.
           </p>
         </div>
       </div>
