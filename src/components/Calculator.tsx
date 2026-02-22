@@ -47,7 +47,6 @@ const DIETS: { value: DietTag; label: string }[] = [
   { value: 'gluten-free', label: 'Gluten-Free' },
   { value: 'dairy-free', label: 'Dairy-Free' },
   { value: 'keto', label: 'Keto' },
-  { value: 'nut-free', label: 'Nut-Free' },
 ];
 
 export function Calculator({ pageSpec }: CalculatorProps) {

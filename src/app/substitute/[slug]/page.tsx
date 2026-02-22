@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { Calculator } from '@/components/Calculator';
-import { TextureTable } from '@/components/TextureTable';
 import { FAQSection } from '@/components/FAQSection';
 import { RelatedLinks } from '@/components/RelatedLinks';
 import { WhenNotToUse } from '@/components/WhenNotToUse';
@@ -51,10 +50,6 @@ export default function SubstitutePage({
   
   const relatedLinks = getRelatedLinks(pageSpec);
 
-  // Format context and diet for display
-  const contextDisplay = pageSpec.context?.replace(/_/g, ' ') || '';
-  const dietDisplay = pageSpec.diet || '';
-
   return (
     <div className="py-6 md:py-12">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -71,35 +66,30 @@ export default function SubstitutePage({
 
         {/* Header */}
         <header className="mb-6 sm:mb-10">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-3 leading-tight">
             {pageSpec.h1}
           </h1>
           
-          {/* Tags - Scrollable on mobile */}
-          <div className="flex flex-nowrap sm:flex-wrap gap-2 mb-4 sm:mb-6 overflow-x-auto pb-2 -mx-1 px-1">
-            <span className="px-2.5 sm:px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap">
-              {ingredient.displayName}
-            </span>
-            {contextDisplay && (
-              <span className="px-2.5 sm:px-3 py-1 bg-accent-100 text-accent-700 rounded-full text-xs sm:text-sm font-medium capitalize whitespace-nowrap">
-                {contextDisplay}
-              </span>
-            )}
-            {dietDisplay && (
-              <span className="px-2.5 sm:px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs sm:text-sm font-medium capitalize whitespace-nowrap">
-                {dietDisplay}
-              </span>
-            )}
-            {pageSpec.goal && (
-              <span className="px-2.5 sm:px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs sm:text-sm font-medium capitalize whitespace-nowrap">
-                {pageSpec.goal}
-              </span>
-            )}
-          </div>
+          {/* Subtitle - context-specific value prop */}
+          <p className="text-sm sm:text-base text-gray-500 mb-4 sm:mb-5">
+            {pageSpec.context && pageSpec.diet 
+              ? `${pageSpec.diet.charAt(0).toUpperCase() + pageSpec.diet.slice(1)}-friendly options for ${pageSpec.context.replace(/_/g, ' ')} with exact ratios`
+              : pageSpec.context 
+                ? `Tested ratios for perfect ${pageSpec.context.replace(/_/g, ' ')} every time`
+                : pageSpec.diet
+                  ? `${pageSpec.diet.charAt(0).toUpperCase() + pageSpec.diet.slice(1)}-friendly alternatives with precise measurements`
+                  : `Exact conversion ratios for any recipe`
+            }
+          </p>
 
           {/* Intro */}
           <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
             {pageSpec.introTemplate}
+          </p>
+          
+          {/* Last Updated */}
+          <p className="text-xs text-gray-400 mt-3">
+            Updated {new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
           </p>
         </header>
 
@@ -108,16 +98,6 @@ export default function SubstitutePage({
           {/* Calculator - Main Column */}
           <div className="lg:col-span-2 order-1">
             <Calculator pageSpec={pageSpec} />
-            
-            {/* Texture Table */}
-            <section className="mt-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                Comparison Table
-              </h2>
-              <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
-                <TextureTable substitutes={ingredient.substitutes} />
-              </div>
-            </section>
 
             {/* When Not to Use */}
             <WhenNotToUse substitutes={ingredient.substitutes} />

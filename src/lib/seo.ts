@@ -1,7 +1,7 @@
 import type { PageSpec, SEOData } from './types';
 
-const SITE_URL = 'https://ingredient-substitution.com';
-const SITE_NAME = 'Ingredient Substitution Tool';
+const SITE_URL = 'https://ingredientsub.com';
+const SITE_NAME = 'IngredientSub';
 
 export function generateSEO(pageSpec: PageSpec): SEOData {
   return {
@@ -39,10 +39,10 @@ export function generateMetaTags(pageSpec: PageSpec) {
 
 export function getHomePageMeta() {
   return {
-    title: 'Ingredient Substitution Calculator | Find Perfect Recipe Alternatives',
+    title: 'Ingredient Substitution Calculator | IngredientSub',
     description: 'Free ingredient substitution calculator. Find exact ratios for egg, milk, flour, and butter replacements. Vegan, gluten-free, and dairy-free options with precise conversions.',
     openGraph: {
-      title: 'Ingredient Substitution Calculator | Find Perfect Recipe Alternatives',
+      title: 'Ingredient Substitution Calculator | IngredientSub',
       description: 'Free ingredient substitution calculator with exact ratios for any recipe.',
       url: SITE_URL,
       siteName: SITE_NAME,
@@ -51,7 +51,7 @@ export function getHomePageMeta() {
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'Ingredient Substitution Calculator',
+      title: 'Ingredient Substitution Calculator | IngredientSub',
       description: 'Find exact ratios for egg, milk, flour, and butter replacements.',
     },
     alternates: {
