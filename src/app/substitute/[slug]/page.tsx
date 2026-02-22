@@ -9,6 +9,8 @@ import { getAllSlugs, getPageSpecBySlug } from '@/lib/slugs';
 import { getIngredientById } from '@/lib/data';
 import { generateMetaTags } from '@/lib/seo';
 import { getRelatedLinks } from '@/lib/internalLinks';
+import { buildIntro } from '@/lib/intro';
+import { buildFAQs, generateFAQJsonLd } from '@/lib/faqBuilder';
 
 // Generate static params for all pages
 export async function generateStaticParams() {
@@ -28,7 +30,8 @@ export async function generateMetadata({
     return { title: 'Not Found' };
   }
   
-  return generateMetaTags(pageSpec);
+  const ingredient = getIngredientById(pageSpec.ingredientId);
+  return generateMetaTags(pageSpec, ingredient || undefined);
 }
 
 export default function SubstitutePage({
@@ -49,9 +52,20 @@ export default function SubstitutePage({
   }
   
   const relatedLinks = getRelatedLinks(pageSpec);
+  
+  // Build dynamic intro and FAQs using context-aware builders
+  const introText = buildIntro(pageSpec, ingredient);
+  const faqItems = buildFAQs(pageSpec, ingredient);
+  const faqJsonLd = generateFAQJsonLd(faqItems);
 
   return (
     <div className="py-8 md:py-14">
+      {/* FAQ JSON-LD Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb - Scrollable on mobile */}
         <nav className="text-sm text-slate-500 mb-5 sm:mb-8 overflow-x-auto whitespace-nowrap pb-2 scrollbar-hide">
@@ -82,9 +96,9 @@ export default function SubstitutePage({
             }
           </p>
 
-          {/* Intro */}
+          {/* Intro - now using dynamic context-aware intro */}
           <p className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-3xl">
-            {pageSpec.introTemplate}
+            {introText}
           </p>
           
           {/* Last Updated */}
@@ -105,8 +119,8 @@ export default function SubstitutePage({
             {/* When Not to Use */}
             <WhenNotToUse substitutes={ingredient.substitutes} />
 
-            {/* FAQ Section */}
-            <FAQSection faqItems={ingredient.faqItems} slug={params.slug} />
+            {/* FAQ Section - now using dynamically built FAQs */}
+            <FAQSection faqItems={faqItems} slug={params.slug} />
           </div>
 
           {/* Sidebar - Shows at bottom on mobile */}

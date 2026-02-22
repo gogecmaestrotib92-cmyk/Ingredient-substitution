@@ -138,6 +138,7 @@ export interface RelatedLink {
   slug: string;
   title: string;
   type: 'base' | 'context' | 'diet' | 'cross-cluster';
+  priority?: number; // Lower number = higher priority
 }
 
 // SEO metadata

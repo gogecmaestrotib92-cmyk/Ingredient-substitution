@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="bg-slate-900 text-slate-400 mt-16 sm:mt-24">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 sm:gap-10">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1 mb-4 md:mb-0">
             <Link href="/" className="flex items-center gap-2.5 mb-4 group">
@@ -80,9 +80,9 @@ export function Footer() {
           </div>
 
           {/* Flour Substitutes */}
-          <div className="col-span-2 sm:col-span-1">
+          <div>
             <h3 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Flour</h3>
-            <ul className="grid grid-cols-2 sm:grid-cols-1 gap-x-4 gap-y-2.5 text-sm">
+            <ul className="space-y-2.5 text-sm">
               <li>
                 <Link href="/substitute/all-purpose-flour/" className="hover:text-white transition-colors">
                   All-Purpose Flour
@@ -105,13 +105,44 @@ export function Footer() {
               </li>
             </ul>
           </div>
+
+          {/* About */}
+          <div>
+            <h3 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">About</h3>
+            <ul className="space-y-2.5 text-sm">
+              <li>
+                <Link href="/about/" className="hover:text-white transition-colors">
+                  About IngredientSub
+                </Link>
+              </li>
+              <li>
+                <Link href="/methodology/" className="hover:text-white transition-colors">
+                  Our Methodology
+                </Link>
+              </li>
+              <li>
+                <Link href="/" className="hover:text-white transition-colors">
+                  Substitution Calculator
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div className="border-t border-slate-800 mt-10 sm:mt-12 pt-8 text-sm text-center">
-          <p className="text-slate-300">© {new Date().getFullYear()} IngredientSub. All rights reserved.</p>
-          <p className="mt-2 text-slate-500">
-            Data is for informational purposes only. Always consider allergies and dietary restrictions.
-          </p>
+        <div className="border-t border-slate-800 mt-10 sm:mt-12 pt-8 text-sm">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="text-center md:text-left">
+              <p className="text-slate-300">© {new Date().getFullYear()} IngredientSub. All rights reserved.</p>
+              <p className="mt-1 text-slate-500 text-xs">
+                Data is for informational purposes only. Always consider allergies and dietary restrictions.
+              </p>
+            </div>
+            <div className="flex gap-4 text-xs text-slate-500">
+              <Link href="/about/" className="hover:text-white transition-colors">About</Link>
+              <span className="text-slate-700">•</span>
+              <Link href="/methodology/" className="hover:text-white transition-colors">Methodology</Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

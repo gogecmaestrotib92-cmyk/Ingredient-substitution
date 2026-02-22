@@ -1,6 +1,6 @@
 import type { FAQItem } from './types';
 
-const SITE_URL = 'https://ingredient-substitution.com';
+const SITE_URL = 'https://ingredientsub.com';
 
 interface FAQSchema {
   '@context': string;

@@ -1,0 +1,51 @@
+
+> ingredient-substitution@1.0.0 build
+> next build && npm run generate-sitemap
+
+  ▲ Next.js 14.2.35
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+./src/app/layout.tsx
+43:9  Warning: Custom fonts not added in `pages/_document.js` will only load for a single page. This is discouraged. See: https://nextjs.org/docs/messages/no-page-custom-font  @next/next/no-page-custom-font
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+   Collecting page data ...
+   Generating static pages (0/151) ...
+   Generating static pages (37/151) 
+   Generating static pages (75/151) 
+   Generating static pages (113/151) 
+ ✓ Generating static pages (151/151)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /                                    4.04 kB         100 kB
+├ ○ /_not-found                          137 B          87.5 kB
+└ ● /substitute/[slug]                   11.8 kB         108 kB
+    ├ /substitute/egg
+    ├ /substitute/egg-for-2-eggs
+    ├ /substitute/egg-for-3-eggs
+    └ [+144 more paths]
++ First Load JS shared by all            87.4 kB
+  ├ chunks/117-010855622abcac0d.js       31.9 kB
+  ├ chunks/fd9d1056-87da80e0c187477b.js  53.7 kB
+  └ other shared chunks (total)          1.88 kB
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses getStaticProps)
+
+
+> ingredient-substitution@1.0.0 generate-sitemap
+> node scripts/generate-sitemap.js
+
+✅ sitemap.xml generated with 148 URLs
+   - Base pages: 10
+   - High-traffic context: 7
+   - Context pages: 64
+   - Diet pages: 62
+   - Quantity/exclusion: 4
+✅ robots.txt copied to out folder

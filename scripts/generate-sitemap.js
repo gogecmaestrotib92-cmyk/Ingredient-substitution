@@ -11,6 +11,34 @@ const slugs = fs.readdirSync(outDir).filter(f =>
   fs.statSync(path.join(outDir, f)).isDirectory()
 );
 
+// Priority mapping based on slug patterns
+function getPriority(slug) {
+  // Base ingredient pages (highest priority)
+  const basePages = ['egg', 'milk', 'butter', 'heavy-cream', 'all-purpose-flour', 
+    'half-and-half', 'whipping-cream', 'self-rising-flour', 'cake-flour', 'bread-flour'];
+  if (basePages.includes(slug)) return '0.9';
+  
+  // High-traffic context pages
+  const highTrafficContexts = [
+    'egg-in-cake', 'egg-in-cookies', 'egg-in-brownies', 'egg-in-pancakes',
+    'milk-in-mac-and-cheese', 'heavy-cream-in-pasta', 'butter-in-cookies'
+  ];
+  if (highTrafficContexts.includes(slug)) return '0.8';
+  
+  // Context pages (good priority)
+  if (slug.includes('-in-')) return '0.7';
+  
+  // Diet pages (moderate priority)
+  if (slug.includes('vegan-') || slug.includes('dairy-free-') || 
+      slug.includes('gluten-free-') || slug.includes('keto-')) return '0.6';
+  
+  // Quantity and exclusion pages (lower priority)
+  if (slug.match(/^\d+-/) || slug.includes('-without-')) return '0.5';
+  
+  // Default
+  return '0.6';
+}
+
 let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -21,12 +49,22 @@ let xml = `<?xml version="1.0" encoding="UTF-8"?>
   </url>
 `;
 
-slugs.forEach(slug => {
+// Sort slugs: base pages first, then by priority
+const sortedSlugs = slugs.sort((a, b) => {
+  const pA = parseFloat(getPriority(a));
+  const pB = parseFloat(getPriority(b));
+  return pB - pA;
+});
+
+sortedSlugs.forEach(slug => {
+  const priority = getPriority(slug);
+  const changefreq = parseFloat(priority) >= 0.8 ? 'weekly' : 'monthly';
+  
   xml += `  <url>
     <loc>${baseUrl}/substitute/${slug}/</loc>
     <lastmod>${today}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <changefreq>${changefreq}</changefreq>
+    <priority>${priority}</priority>
   </url>
 `;
 });
@@ -36,12 +74,24 @@ xml += `</urlset>`;
 // Write to out folder (for deployment)
 fs.writeFileSync(path.join(__dirname, '..', 'out', 'sitemap.xml'), xml);
 console.log(`✅ sitemap.xml generated with ${slugs.length + 1} URLs`);
+console.log(`   - Base pages: ${slugs.filter(s => getPriority(s) === '0.9').length}`);
+console.log(`   - High-traffic context: ${slugs.filter(s => getPriority(s) === '0.8').length}`);
+console.log(`   - Context pages: ${slugs.filter(s => getPriority(s) === '0.7').length}`);
+console.log(`   - Diet pages: ${slugs.filter(s => getPriority(s) === '0.6').length}`);
+console.log(`   - Quantity/exclusion: ${slugs.filter(s => getPriority(s) === '0.5').length}`);
 
 // Also copy robots.txt to out folder
 const robots = `User-agent: *
 Allow: /
 
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Main sitemap
 Sitemap: ${baseUrl}/sitemap.xml
+
+# Disallow admin and API paths (if any)
+Disallow: /api/
 `;
 fs.writeFileSync(path.join(__dirname, '..', 'out', 'robots.txt'), robots);
 console.log('✅ robots.txt copied to out folder');
