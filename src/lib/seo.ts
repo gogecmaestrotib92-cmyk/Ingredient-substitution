@@ -1,16 +1,61 @@
 import type { PageSpec, SEOData, Ingredient } from './types';
+import { isPriorityPage } from './priorityPages';
 
 const SITE_URL = 'https://ingredientsub.com';
 const SITE_NAME = 'IngredientSub';
 
+// Benefit phrases for title variation
+const BENEFIT_PHRASES = [
+  'Exact Ratios + Texture Guide',
+  'Calculator & Pro Tips',
+  'Tested Ratios + Results',
+  'Perfect Results Every Time',
+  'With Exact Measurements',
+];
+
+// Get deterministic benefit phrase based on slug hash
+function getBenefitPhrase(slug: string): string {
+  const hash = slug.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return BENEFIT_PHRASES[hash % BENEFIT_PHRASES.length];
+}
+
 // Build SEO-optimized title with keyword + benefit phrase
 export function buildTitle(pageSpec: PageSpec, ingredient?: Ingredient): string {
-  const { ingredientId, context, goal, diet, quantity, exclusion, variant } = pageSpec;
+  const { ingredientId, context, goal, diet, quantity, exclusion, variant, slug } = pageSpec;
   const ingredientName = formatIngredientName(ingredientId);
+  const isPriority = isPriorityPage(slug);
   
   // Get substitute count for social proof
   const subCount = ingredient?.substitutes.length || 8;
   
+  // Priority pages get enhanced titles
+  if (isPriority) {
+    if (diet && context) {
+      const ctxName = formatContextName(context);
+      return `Best ${capitalize(diet)} ${ingredientName} Substitute for ${ctxName} (${getBenefitPhrase(slug)})`;
+    }
+    
+    if (context) {
+      const ctxName = formatContextName(context);
+      const differentiator = context === 'cake' || context === 'cookies' 
+        ? 'Moist & Tender Results' 
+        : context === 'brownies' 
+          ? 'Fudgy Texture Guide'
+          : getBenefitPhrase(slug);
+      return `Best ${ingredientName} Substitute for ${ctxName} (${differentiator})`;
+    }
+    
+    if (variant === 'base') {
+      return `${ingredientName} Substitutes: ${subCount} Alternatives with Calculator & Texture Guide`;
+    }
+    
+    if (goal) {
+      const goalPhrase = getGoalPhrase(goal);
+      return `${ingredientName} Substitutes for ${capitalize(goal)} – ${goalPhrase} | Calculator`;
+    }
+  }
+  
+  // Standard titles for non-priority pages
   if (diet && context) {
     const ctxName = formatContextName(context);
     return `${capitalize(diet)} ${ingredientName} Substitutes for ${ctxName} – ${subCount} Options with Exact Ratios`;
@@ -52,14 +97,36 @@ export function buildTitle(pageSpec: PageSpec, ingredient?: Ingredient): string 
   return `${ingredientName} Substitutes – Conversion Calculator | ${SITE_NAME}`;
 }
 
-// Build SEO-optimized meta description
+// Build SEO-optimized meta description (max 155-160 chars)
 export function buildDescription(pageSpec: PageSpec, ingredient?: Ingredient): string {
-  const { ingredientId, context, goal, diet, quantity, exclusion } = pageSpec;
+  const { ingredientId, context, goal, diet, quantity, exclusion, slug } = pageSpec;
   const ingredientName = formatIngredientName(ingredientId).toLowerCase();
+  const isPriority = isPriorityPage(slug);
   
   // Get top substitutes for specificity
   const topSubs = ingredient?.substitutes.slice(0, 2).map(s => s.displayName).join(' or ') || 'flax egg or applesauce';
+  const topSub = ingredient?.substitutes[0]?.displayName || 'flax egg';
   
+  // Priority pages get enhanced, unique descriptions
+  if (isPriority) {
+    if (diet && context) {
+      const ctxName = formatContextName(context).toLowerCase();
+      return `${capitalize(diet)} ${ingredientName} substitute for ${ctxName}: ${topSub} works best. Free calculator with exact ratios, texture impact, and ${diet} options.`;
+    }
+    
+    if (context) {
+      const ctxName = formatContextName(context).toLowerCase();
+      const textureHint = context === 'cake' ? 'moist' : context === 'cookies' ? 'chewy' : context === 'brownies' ? 'fudgy' : 'perfect';
+      return `Best ${ingredientName} substitute for ${ctxName}: try ${topSub}. Calculator shows exact ratios for ${textureHint} results. Vegan & allergy options included.`;
+    }
+    
+    if (pageSpec.variant === 'base') {
+      const count = ingredient?.substitutes.length || 8;
+      return `${count} ${ingredientName} substitutes ranked with exact ratios. Calculator for any quantity. Texture guide, dietary filters, recipe tips included.`;
+    }
+  }
+  
+  // Standard descriptions
   if (diet && context) {
     const ctxName = formatContextName(context).toLowerCase();
     return `Find ${diet} ${ingredientName} substitutes for ${ctxName}. Try ${topSubs}. Calculator gives exact ratios, texture impact, and pro tips for perfect results.`;
@@ -67,16 +134,16 @@ export function buildDescription(pageSpec: PageSpec, ingredient?: Ingredient): s
   
   if (quantity && context) {
     const ctxName = formatContextName(context).toLowerCase();
-    return `Replace ${quantity} ${ingredientName}s in ${ctxName}: get exact amounts for ${topSubs}. Our calculator shows ratios, texture changes, and when to avoid each option.`;
+    return `Replace ${quantity} ${ingredientName}s in ${ctxName}: get exact amounts for ${topSubs}. Calculator shows ratios, texture changes, and when to avoid.`;
   }
   
   if (context) {
     const ctxName = formatContextName(context).toLowerCase();
-    return `Best ${ingredientName} substitutes for ${ctxName}. Compare ${topSubs} with exact ratios, texture impact, and dietary tags. Free calculator for any quantity.`;
+    return `Best ${ingredientName} substitutes for ${ctxName}. Compare ${topSubs} with exact ratios, texture impact, and dietary tags. Free calculator.`;
   }
   
   if (goal) {
-    return `${ingredientName} substitutes for ${goal}: compare ${topSubs} and more. See which alternatives provide the best ${goal} with exact conversion ratios.`;
+    return `${ingredientName} substitutes for ${goal}: ${topSubs} and more. See which alternatives provide the best ${goal} with exact conversion ratios.`;
   }
   
   if (diet) {
@@ -85,10 +152,10 @@ export function buildDescription(pageSpec: PageSpec, ingredient?: Ingredient): s
   
   if (exclusion) {
     const excluded = exclusion.replace('without-', '');
-    return `${ingredientName} substitutes without ${excluded}. Try ${topSubs} instead. Calculator shows exact ratios, texture impact, and best recipe contexts.`;
+    return `${ingredientName} substitutes without ${excluded}. Try ${topSubs}. Calculator shows exact ratios, texture impact, and best recipe contexts.`;
   }
   
-  return `${ingredientName} substitutes: ${topSubs} and more. Free calculator with exact ratios, texture comparisons, dietary filters, and recipe-specific recommendations.`;
+  return `${ingredientName} substitutes: ${topSubs} and more. Free calculator with exact ratios, texture comparisons, dietary filters, and recipe tips.`;
 }
 
 // Generate canonical URL

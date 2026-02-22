@@ -5,11 +5,14 @@ import { FAQSection } from '@/components/FAQSection';
 import { RelatedLinks } from '@/components/RelatedLinks';
 import { WhenNotToUse } from '@/components/WhenNotToUse';
 import { ProductPlaceholder } from '@/components/ProductPlaceholder';
+import { ProTips, buildProTips } from '@/components/ProTips';
 import { getAllSlugs, getPageSpecBySlug } from '@/lib/slugs';
 import { getIngredientById } from '@/lib/data';
 import { generateMetaTags } from '@/lib/seo';
 import { getRelatedLinks } from '@/lib/internalLinks';
 import { buildIntro } from '@/lib/intro';
+import { buildPriorityIntro } from '@/lib/priorityIntro';
+import { isPriorityPage } from '@/lib/priorityPages';
 import { buildFAQs, generateFAQJsonLd } from '@/lib/faqBuilder';
 
 // Generate static params for all pages
@@ -53,10 +56,20 @@ export default function SubstitutePage({
   
   const relatedLinks = getRelatedLinks(pageSpec);
   
-  // Build dynamic intro and FAQs using context-aware builders
-  const introText = buildIntro(pageSpec, ingredient);
+  // Determine if this is a priority page for enhanced content
+  const isPriority = isPriorityPage(params.slug);
+  
+  // Build dynamic intro - use priority intro for priority pages
+  const introText = isPriority 
+    ? buildPriorityIntro(pageSpec, ingredient)
+    : buildIntro(pageSpec, ingredient);
+  
+  // Build FAQs using context-aware builder
   const faqItems = buildFAQs(pageSpec, ingredient);
   const faqJsonLd = generateFAQJsonLd(faqItems);
+  
+  // Build pro tips for priority pages
+  const proTips = isPriority ? buildProTips(pageSpec, ingredient) : [];
 
   return (
     <div className="py-8 md:py-14">
@@ -118,6 +131,11 @@ export default function SubstitutePage({
 
             {/* When Not to Use */}
             <WhenNotToUse substitutes={ingredient.substitutes} />
+            
+            {/* Pro Tips - Priority pages only */}
+            {isPriority && proTips.length > 0 && (
+              <ProTips tips={proTips} />
+            )}
 
             {/* FAQ Section - now using dynamically built FAQs */}
             <FAQSection faqItems={faqItems} slug={params.slug} />

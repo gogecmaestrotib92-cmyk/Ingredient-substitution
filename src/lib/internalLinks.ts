@@ -1,5 +1,6 @@
 import type { PageSpec, RelatedLink, Cluster } from './types';
 import { buildPageSpecs, getPageSpecBySlug } from './slugs';
+import { isPriorityPage } from './priorityPages';
 
 // Cross-cluster mapping for internal linking - expanded with more relevant links
 const crossClusterLinks: Record<Cluster, string[]> = {
@@ -17,10 +18,13 @@ const priorityContexts: Record<string, string[]> = {
   all_purpose_flour: ['cake', 'cookies', 'bread', 'muffins', 'pancakes'],
 };
 
-// Get related links for a page - guaranteed structure: base + 3 context + 2 diet + 2 cross-cluster
+// Get related links for a page
+// Priority pages get: base + 3 context + 2 diet + 2 cross-cluster = 8 links
+// Standard pages get: base + 2 context + 1 diet + 1 cross-cluster = 5 links
 export function getRelatedLinks(pageSpec: PageSpec): RelatedLink[] {
   const links: RelatedLink[] = [];
   const allSpecs = buildPageSpecs();
+  const isPriority = isPriorityPage(pageSpec.slug);
   
   // 1. ALWAYS add base ingredient page (if not already on it)
   const baseSlugs: Record<string, string> = {
@@ -49,8 +53,9 @@ export function getRelatedLinks(pageSpec: PageSpec): RelatedLink[] {
     }
   }
   
-  // 2. Add EXACTLY 3 sibling context pages (same ingredient, different context)
-  // Prioritize high-traffic contexts
+  // 2. Add sibling context pages (same ingredient, different context)
+  // Priority pages get 3, standard get 2
+  const contextLimit = isPriority ? 3 : 2;
   const priority = priorityContexts[pageSpec.ingredientId] || [];
   const siblingContexts = allSpecs
     .filter(spec => 
@@ -67,7 +72,7 @@ export function getRelatedLinks(pageSpec: PageSpec): RelatedLink[] {
       if (bIdx === -1) return -1;
       return aIdx - bIdx;
     })
-    .slice(0, 3);
+    .slice(0, contextLimit);
   
   siblingContexts.forEach((spec, index) => {
     links.push({
@@ -78,7 +83,9 @@ export function getRelatedLinks(pageSpec: PageSpec): RelatedLink[] {
     });
   });
   
-  // 3. Add EXACTLY 2 diet variant pages
+  // 3. Add diet variant pages
+  // Priority pages get 2, standard get 1
+  const dietLimit = isPriority ? 2 : 1;
   const diets = ['vegan', 'dairy-free', 'gluten-free', 'paleo', 'keto'];
   const dietPages = allSpecs
     .filter(spec =>
@@ -92,7 +99,7 @@ export function getRelatedLinks(pageSpec: PageSpec): RelatedLink[] {
       const bIdx = diets.indexOf(b.diet || '');
       return aIdx - bIdx;
     })
-    .slice(0, 2);
+    .slice(0, dietLimit);
   
   dietPages.forEach((spec, index) => {
     links.push({
@@ -103,12 +110,14 @@ export function getRelatedLinks(pageSpec: PageSpec): RelatedLink[] {
     });
   });
   
-  // 4. Add EXACTLY 2 cross-cluster recommendations
+  // 4. Add cross-cluster recommendations
+  // Priority pages get 2, standard get 1
+  const crossLimit = isPriority ? 2 : 1;
   const crossSlugs = crossClusterLinks[pageSpec.cluster] || [];
   const crossPages = crossSlugs
     .map(slug => getPageSpecBySlug(slug))
     .filter((spec): spec is PageSpec => spec !== undefined && spec.slug !== pageSpec.slug)
-    .slice(0, 2);
+    .slice(0, crossLimit);
   
   crossPages.forEach((spec, index) => {
     links.push({

@@ -1,82 +1,113 @@
-import type { SubstituteResult } from '@/lib/types';
+import type { SubstituteResult, Unit } from '@/lib/types';
 
 interface SubstituteCardProps {
   result: SubstituteResult;
+  quantity: number;
+  unit: Unit;
 }
 
-export function SubstituteCard({ result }: SubstituteCardProps) {
+export function SubstituteCard({ result, quantity, unit }: SubstituteCardProps) {
   const { substitute, displayAmount, reasoning, addOns, rank } = result;
 
-  // Badge colors based on rank
+  // Rank badge styles - larger and more visible
   const rankStyles = {
-    1: 'bg-primary-600 text-white ring-2 ring-primary-200',
-    2: 'bg-primary-100 text-primary-700',
-    3: 'bg-slate-100 text-slate-600',
+    1: 'bg-primary-600 text-white ring-2 ring-primary-200 shadow-sm',
+    2: 'bg-primary-100 text-primary-700 ring-1 ring-primary-200',
+    3: 'bg-slate-100 text-slate-600 ring-1 ring-slate-200',
   };
 
-  // Taste impact colors
-  const tasteColors = {
-    none: 'text-emerald-700 bg-emerald-50 border-emerald-100',
-    low: 'text-emerald-700 bg-emerald-50 border-emerald-100',
-    medium: 'text-amber-700 bg-amber-50 border-amber-100',
-    high: 'text-red-700 bg-red-50 border-red-100',
-  };
+  // Format best-in list (first 3)
+  const bestFor = substitute.bestIn.slice(0, 3).map(b => 
+    b.replace(/_/g, ' ')
+  ).join(', ');
+
+  // Format avoid-in list (first 2)
+  const avoidIn = substitute.avoidIn.slice(0, 2).map(a => 
+    a.replace(/_/g, ' ')
+  ).join(', ');
+
+  // Texture description
+  const textureDesc = substitute.textureImpact === 'similar' 
+    ? 'Nearly identical to original'
+    : substitute.textureImpact === 'slightly different'
+      ? 'Slight texture variation, usually unnoticeable'
+      : substitute.textureImpact === 'noticeably different'
+        ? 'Noticeable change, works in most recipes'
+        : 'Significant change, best for specific uses';
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 hover:border-primary-300 hover:shadow-sm transition-all">
-      <div className="flex items-start gap-3 sm:gap-4">
-        {/* Rank Badge */}
-        <div className={`flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-bold text-sm sm:text-base ${rankStyles[rank as 1 | 2 | 3] || rankStyles[3]}`}>
-          {rank}
-        </div>
-
-        <div className="flex-1 min-w-0">
-          {/* Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 sm:gap-2 mb-3">
-            <h4 className="font-bold text-slate-900 text-lg sm:text-xl">
-              {substitute.displayName}
-            </h4>
-            <span className={`px-2.5 py-1 rounded-lg text-xs font-semibold self-start sm:self-auto border ${tasteColors[substitute.tasteImpact]}`}>
-              {substitute.tasteImpact === 'none' ? 'No' : substitute.tasteImpact.charAt(0).toUpperCase() + substitute.tasteImpact.slice(1)} taste change
-            </span>
+    <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-primary-300 hover:shadow-md transition-all">
+      {/* Header with rank and conversion */}
+      <div className="p-4 sm:p-5">
+        <div className="flex items-start gap-3 sm:gap-4">
+          {/* Rank Badge - larger */}
+          <div className={`flex-shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center font-bold text-base sm:text-lg ${rankStyles[rank as 1 | 2 | 3] || rankStyles[3]}`}>
+            {rank}
           </div>
 
-          {/* Amount - highlighted */}
-          <div className="bg-gradient-to-r from-primary-50 to-primary-100/50 rounded-xl px-4 sm:px-5 py-3 sm:py-4 mb-3 sm:mb-4 border border-primary-100">
-            <div className="text-xs sm:text-sm text-primary-600 font-semibold mb-0.5 uppercase tracking-wide">Use</div>
-            <div className="text-2xl sm:text-3xl font-bold text-primary-800">{displayAmount}</div>
-          </div>
-
-          {/* Reasoning */}
-          <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-3">{reasoning}</p>
-
-          {/* Diet Tags */}
-          <div className="flex flex-wrap gap-1.5 mb-3">
-            {substitute.dietTags.map(tag => (
-              <span
-                key={tag}
-                className="px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md text-xs font-medium"
-              >
-                {tag}
+          <div className="flex-1 min-w-0">
+            {/* Dominant conversion display */}
+            <div className="mb-2">
+              <span className="text-slate-500 text-sm">
+                {quantity} {unit}{quantity !== 1 && !unit.endsWith('s') ? 's' : ''} →
               </span>
-            ))}
-          </div>
-
-          {/* Add-ons / Pro Tips */}
-          {addOns.length > 0 && (
-            <div className="bg-amber-50 border border-amber-200 rounded-xl px-3 sm:px-4 py-3">
-              <div className="flex items-center gap-1.5 text-sm font-semibold text-amber-800 mb-1">
-                <span className="text-base">💡</span>
-                Pro Tip
-              </div>
-              <ul className="text-sm text-amber-800 space-y-0.5">
-                {addOns.map((addon, i) => (
-                  <li key={i}>{addon}</li>
-                ))}
-              </ul>
+              <span className="text-xl sm:text-2xl font-bold text-slate-900 ml-2">
+                {displayAmount}
+              </span>
+              <span className="text-lg sm:text-xl font-semibold text-primary-700 ml-1.5">
+                {substitute.displayName}
+              </span>
             </div>
-          )}
+
+            {/* Quick info pills */}
+            <div className="flex flex-wrap gap-1.5">
+              {substitute.dietTags.slice(0, 3).map(tag => (
+                <span
+                  key={tag}
+                  className="px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md text-xs font-medium"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
+      </div>
+
+      {/* Details section with tinted background */}
+      <div className="bg-slate-50 border-t border-slate-100 px-4 sm:px-5 py-4 space-y-3">
+        {/* Best for */}
+        {bestFor && (
+          <div className="flex gap-2 text-sm">
+            <span className="font-semibold text-slate-700 shrink-0">Best for:</span>
+            <span className="text-slate-600 capitalize">{bestFor}</span>
+          </div>
+        )}
+
+        {/* Texture */}
+        <div className="flex gap-2 text-sm">
+          <span className="font-semibold text-slate-700 shrink-0">Texture:</span>
+          <span className="text-slate-600">{textureDesc}</span>
+        </div>
+
+        {/* Avoid if */}
+        {avoidIn && (
+          <div className="flex gap-2 text-sm">
+            <span className="font-semibold text-amber-700 shrink-0">Avoid in:</span>
+            <span className="text-amber-600 capitalize">{avoidIn}</span>
+          </div>
+        )}
+
+        {/* Pro Tips (if any) */}
+        {addOns.length > 0 && (
+          <div className="pt-2 mt-2 border-t border-slate-200">
+            <div className="flex items-center gap-1.5 text-sm font-semibold text-amber-700 mb-1">
+              <span>💡</span>
+              <span>Pro tip</span>
+            </div>
+            <p className="text-sm text-amber-700">{addOns[0]}</p>
+          </div>
+        )}
       </div>
     </div>
   );

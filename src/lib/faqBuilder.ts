@@ -1,13 +1,15 @@
 import type { PageSpec, Ingredient, FAQItem, DietTag, GoalTag, RecipeContext, Ratio, SubstituteOption } from './types';
+import { isPriorityPage } from './priorityPages';
 
 /**
- * Builds 5-7 context-aware FAQ items with long-tail questions.
+ * Builds 5-7 context-aware FAQ items (7-9 for priority pages) with long-tail questions.
  * Includes context-specific, "without" questions, and texture goal questions.
  */
 export function buildFAQs(pageSpec: PageSpec, ingredient: Ingredient): FAQItem[] {
-  const { context, goal, diet, quantity, exclusion } = pageSpec;
+  const { context, goal, diet, quantity, exclusion, slug } = pageSpec;
   const ingredientName = ingredient.displayName.toLowerCase();
   const topSubs = ingredient.substitutes.slice(0, 3);
+  const isPriority = isPriorityPage(slug);
   
   const faqs: FAQItem[] = [];
   
@@ -39,13 +41,20 @@ export function buildFAQs(pageSpec: PageSpec, ingredient: Ingredient): FAQItem[]
     faqs.push(buildExclusionQuestion(ingredientName, exclusion, ingredient));
   }
   
-  // 7. Add general questions to reach 5-7 total
-  if (faqs.length < 5) {
+  // 7. Add general questions to reach minimum
+  const minFaqs = isPriority ? 7 : 5;
+  if (faqs.length < minFaqs) {
     faqs.push(...buildGeneralQuestions(ingredientName, topSubs, ingredient, context as RecipeContext | undefined));
   }
   
-  // Limit to 7 FAQs
-  return faqs.slice(0, 7);
+  // 8. Priority pages get additional long-tail questions
+  if (isPriority) {
+    faqs.push(...buildLongTailQuestions(ingredientName, topSubs, ingredient, context as RecipeContext | undefined, diet));
+  }
+  
+  // Limit: 9 for priority, 7 for standard
+  const maxFaqs = isPriority ? 9 : 7;
+  return faqs.slice(0, maxFaqs);
 }
 
 // Format ratio for display
@@ -217,6 +226,68 @@ function buildGeneralQuestions(
     question: `Can I use multiple ${ingredientName} substitutes in one recipe?`,
     answer: `Yes, combining substitutes can work, but requires careful ratio adjustments. For example, you might use half ${sub1.displayName} (${formatRatio(sub1.baseRatio)} ÷ 2) and half ${sub2.displayName} (${formatRatio(sub2.baseRatio)} ÷ 2) to balance texture and flavor. This works best when one substitute provides ${sub1.goals[0] || 'binding'} and another adds ${sub2.goals[0] || 'moisture'}. Start with small batches to test results.`
   });
+  
+  return questions;
+}
+
+/**
+ * Build additional long-tail questions for priority pages
+ */
+function buildLongTailQuestions(
+  ingredientName: string,
+  topSubs: SubstituteOption[],
+  ingredient: Ingredient,
+  context?: RecipeContext,
+  diet?: string
+): FAQItem[] {
+  const questions: FAQItem[] = [];
+  const sub1 = topSubs[0];
+  const sub2 = topSubs[1];
+  const contextName = context ? formatContext(context) : 'recipes';
+  
+  // "Can I use X in specific context?" question
+  if (context && sub1) {
+    questions.push({
+      question: `Can I use ${sub1.displayName} in ${contextName} if I&apos;m out of ${ingredientName}?`,
+      answer: `Yes, ${sub1.displayName} works well in ${contextName} as an ${ingredientName} substitute. Use ${formatRatio(sub1.baseRatio)} for each ${ingredientName} required. In ${contextName} specifically, this produces ${sub1.textureImpact} texture results. Allow 2-3 minutes resting time if the substitute needs to hydrate.`
+    });
+  }
+  
+  // "Best substitute without [common alternative]" question
+  const withoutSub = ingredient.substitutes.find(s => 
+    !s.displayName.toLowerCase().includes('banana') && 
+    !s.displayName.toLowerCase().includes(sub1.displayName.toLowerCase())
+  );
+  if (withoutSub) {
+    questions.push({
+      question: `What is the best ${ingredientName} substitute without banana?`,
+      answer: `If you want to avoid banana, try ${withoutSub.displayName} at ${formatRatio(withoutSub.baseRatio)} per ${ingredientName}. This option has ${withoutSub.textureImpact} texture impact and ${withoutSub.tasteImpact} taste impact. It works well in ${formatList(withoutSub.bestIn.slice(0, 2))} and doesn&apos;t add any banana flavor to your recipe.`
+    });
+  }
+  
+  // "Will this change texture?" question
+  questions.push({
+    question: `Will substituting ${ingredientName} change the texture of my ${contextName}?`,
+    answer: `Texture may change slightly depending on your substitute choice. ${sub1.displayName} produces ${sub1.textureImpact} texture impact—most people find this acceptable. ${sub2.displayName} creates ${sub2.textureImpact} changes. For closest results to traditional ${contextName}, choose substitutes rated "similar" in texture impact. The calculator below shows texture ratings for all options.`
+  });
+  
+  // "How much substitute for multiple?" question (if no quantity specified)
+  questions.push({
+    question: `How much ${sub1.displayName} do I need for 2 ${ingredientName}s?`,
+    answer: `For 2 ${ingredientName}s, use ${calculateAmount(sub1.baseRatio, 2)} of ${sub1.displayName}. Double-check using our calculator above—enter "2" in the quantity field to see exact amounts for all substitute options, not just ${sub1.displayName}. Larger quantities generally work proportionally, though you may need slightly less for 3+ ${ingredientName}s.`
+  });
+  
+  // Diet-specific long-tail if applicable
+  if (!diet) {
+    const veganSubs = ingredient.substitutes.filter(s => s.dietTags.includes('vegan' as never));
+    if (veganSubs.length > 0) {
+      const veganSub = veganSubs[0];
+      questions.push({
+        question: `What is the best vegan ${ingredientName} substitute for ${contextName}?`,
+        answer: `The best vegan ${ingredientName} substitute for ${contextName} is ${veganSub.displayName} at ${formatRatio(veganSub.baseRatio)}. It produces ${veganSub.textureImpact} texture impact and works especially well in ${formatList(veganSub.bestIn.slice(0, 2))}. Filter by "vegan" in the calculator to see all ${veganSubs.length} plant-based options available.`
+      });
+    }
+  }
   
   return questions;
 }
