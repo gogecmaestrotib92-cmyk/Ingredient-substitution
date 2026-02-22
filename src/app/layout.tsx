@@ -5,18 +5,21 @@ import { Footer } from '@/components/Footer';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Ingredient Substitution Calculator | SubstituteCalc',
-    template: '%s | SubstituteCalc',
+    default: 'Ingredient Substitution Calculator | IngredientSub',
+    template: '%s | IngredientSub',
   },
   description: 'Free ingredient substitution calculator with exact conversion ratios for any recipe. Find egg, milk, flour, and butter replacements with precise measurements.',
   keywords: ['ingredient substitute', 'baking substitute', 'egg replacement', 'milk substitute', 'gluten-free flour', 'vegan baking'],
-  authors: [{ name: 'SubstituteCalc' }],
-  creator: 'SubstituteCalc',
-  metadataBase: new URL('https://ingredient-substitution.com'),
+  authors: [{ name: 'IngredientSub' }],
+  creator: 'IngredientSub',
+  metadataBase: new URL('https://ingredientsub.com'),
+  icons: {
+    icon: '/icon.svg',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    siteName: 'SubstituteCalc',
+    siteName: 'IngredientSub',
   },
   twitter: {
     card: 'summary_large_image',

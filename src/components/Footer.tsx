@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function Footer() {
   return (
@@ -8,9 +9,15 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1 mb-4 md:mb-0">
             <Link href="/" className="flex items-center gap-2 mb-3 sm:mb-4">
-              <span className="text-xl sm:text-2xl">🥄</span>
+              <Image 
+                src="/icon.svg" 
+                alt="IngredientSub" 
+                width={24} 
+                height={24}
+                className="w-6 h-6 sm:w-7 sm:h-7"
+              />
               <span className="font-bold text-lg sm:text-xl text-white">
-                SubstituteCalc
+                Ingredient<span className="text-primary-500">Sub</span>
               </span>
             </Link>
             <p className="text-xs sm:text-sm">
@@ -101,9 +108,9 @@ export function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-xs sm:text-sm text-center">
-          <p>© {new Date().getFullYear()} SubstituteCalc. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} IngredientSub. All rights reserved.</p>
           <p className="mt-2 text-gray-500">
-            Built with Next.js. Data is for informational purposes only.
+            Data is for informational purposes only.
           </p>
         </div>
       </div>
