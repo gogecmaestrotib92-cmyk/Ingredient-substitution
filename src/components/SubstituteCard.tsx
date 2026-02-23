@@ -26,14 +26,14 @@ export function SubstituteCard({ result, quantity, unit }: SubstituteCardProps) 
     a.replace(/_/g, ' ')
   ).join(', ');
 
-  // Texture description
+  // Texture description - more concrete and specific
   const textureDesc = substitute.textureImpact === 'similar' 
-    ? 'Nearly identical to original'
+    ? 'Nearly identical structure and mouthfeel'
     : substitute.textureImpact === 'slightly different'
-      ? 'Slight texture variation, usually unnoticeable'
+      ? 'Subtle softness; minimal impact on rise'
       : substitute.textureImpact === 'noticeably different'
-        ? 'Noticeable change, works in most recipes'
-        : 'Significant change, best for specific uses';
+        ? 'Denser crumb; adds moisture, less lift'
+        : 'Distinct change; works best in specific recipes';
 
   return (
     <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-primary-300 hover:shadow-md transition-all">
@@ -100,12 +100,14 @@ export function SubstituteCard({ result, quantity, unit }: SubstituteCardProps) 
 
         {/* Pro Tips (if any) */}
         {addOns.length > 0 && (
-          <div className="pt-2 mt-2 border-t border-slate-200">
-            <div className="flex items-center gap-1.5 text-sm font-semibold text-amber-700 mb-1">
-              <span>💡</span>
-              <span>Pro tip</span>
+          <div className="mt-3 p-3 bg-amber-50 border border-amber-100 rounded-xl">
+            <div className="flex items-start gap-2">
+              <span className="text-sm mt-0.5">💡</span>
+              <div>
+                <span className="text-xs font-bold text-amber-800 uppercase tracking-wide">Pro Tip</span>
+                <p className="text-sm text-amber-700 mt-0.5 leading-snug">{addOns[0]}</p>
+              </div>
             </div>
-            <p className="text-sm text-amber-700">{addOns[0]}</p>
           </div>
         )}
       </div>

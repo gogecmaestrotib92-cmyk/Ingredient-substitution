@@ -71,7 +71,27 @@ function buildBaseIntro(
   const sub1 = topSubs[0];
   const sub2 = topSubs[1];
   
-  return `Need to replace ${ingredientName} in your recipe? This comprehensive calculator covers ${subCount} tested alternatives with exact conversion ratios tailored to your specific needs. The two most versatile options are ${sub1.displayName} (${formatRatio(sub1.baseRatio)}) and ${sub2.displayName} (${formatRatio(sub2.baseRatio)})—both perform reliably across a wide range of recipes. Each substitute listed here includes detailed texture impact ratings, so you'll know whether to expect similar results or noticeable differences. We've also tagged every option with dietary labels like vegan, dairy-free, gluten-free, and keto for quick filtering. The "best in" and "avoid in" notes help you match the right substitute to your recipe type—whether you're baking cakes, making sauces, or preparing savory dishes. Use the quantity selector below to get precise measurements calculated automatically. Our "when not to use" warnings help you avoid common substitution mistakes that could affect your final result. Scroll down for frequently asked questions covering specific scenarios and edge cases.`;
+  // Ingredient-specific intros (90-140 words, direct and tool-like)
+  const ingredientIntros: Record<string, string> = {
+    egg: `Out of eggs—or avoiding them? This calculator shows ${subCount} tested replacements with exact ratios for any quantity. Top picks: ${sub1.displayName} (${formatRatio(sub1.baseRatio)}) for binding, ${sub2.displayName} (${formatRatio(sub2.baseRatio)}) for moisture. Eggs affect rise, structure, and binding differently in each recipe, so we rank substitutes by context—cake vs. cookies vs. brownies each have different winners. Every option includes texture impact ratings, dietary tags (vegan, gluten-free), and specific "avoid in" warnings. Select your quantity below, choose what you're making, and get precise measurements calculated automatically.`,
+    
+    milk: `No milk on hand, or need a dairy-free option? This calculator covers ${subCount} alternatives with ratios adjusted per recipe type. Best overall: ${sub1.displayName} (${formatRatio(sub1.baseRatio)}) for similar richness, ${sub2.displayName} (${formatRatio(sub2.baseRatio)}) for cooking. In baking, milk provides moisture and fat—so texture impact varies by substitute. In savory dishes, creaminess matters more. Each option shows texture changes, diet tags, and "when to avoid" notes. Enter your quantity, select what you're making, and see exact amounts.`,
+    
+    butter: `Out of butter—or need a vegan swap? This calculator ranks ${subCount} alternatives with precise ratios for baking and cooking. Top choices: ${sub1.displayName} (${formatRatio(sub1.baseRatio)}) for flakiness, ${sub2.displayName} (${formatRatio(sub2.baseRatio)}) for moisture. Butter affects texture (crisp, tender, chewy) and flavor differently by recipe—cookies, pie crust, and frosting each need different approaches. Every substitute shows texture impact, dietary info, and context-specific warnings. Set your quantity, pick your recipe type, and get calculated measurements.`,
+    
+    all_purpose_flour: `Need a flour swap for dietary reasons or pantry emergencies? This calculator covers ${subCount} alternatives with exact ratios. Leading options: ${sub1.displayName} (${formatRatio(sub1.baseRatio)}) and ${sub2.displayName} (${formatRatio(sub2.baseRatio)}). Flour provides structure and texture—substitutes affect rise, density, and crumb differently. Gluten-free options often need binding adjustments. Each alternative includes texture ratings, diet tags, and "avoid in" warnings for specific recipes. Select quantity and recipe type for precise measurements.`,
+    
+    heavy_cream: `No heavy cream—or avoiding dairy? This calculator shows ${subCount} alternatives ranked by use case. Top performers: ${sub1.displayName} (${formatRatio(sub1.baseRatio)}) for whipping, ${sub2.displayName} (${formatRatio(sub2.baseRatio)}) for cooking. Cream adds richness and body; substitutes vary in fat content and whipping ability. We indicate which work for sauces, desserts, and coffee. Each option shows texture impact and dietary tags. Enter your quantity and recipe context for precise ratios.`,
+  };
+  
+  // Return ingredient-specific intro or generic fallback
+  const specificIntro = ingredientIntros[ingredient.id];
+  if (specificIntro) {
+    return specificIntro;
+  }
+  
+  // Generic fallback (still improved)
+  return `Need to replace ${ingredientName}? This calculator covers ${subCount} tested alternatives with exact ratios. Top options: ${sub1.displayName} (${formatRatio(sub1.baseRatio)}) and ${sub2.displayName} (${formatRatio(sub2.baseRatio)}). Each substitute includes texture impact ratings so you know what to expect—similar, slightly different, or noticeable change. Filter by dietary needs (vegan, dairy-free, gluten-free) and see "best in" and "avoid in" notes for each recipe type. Enter quantity below to get precise measurements calculated automatically.`;
 }
 
 function buildContextIntro(
@@ -86,8 +106,9 @@ function buildContextIntro(
   const subCount = ingredient.substitutes.length;
   
   const sub1Ratio = getContextRatio(sub1, context);
+  const role = getContextRole(context);
   
-  return `Making ${ctxName} without ${ingredientName}? This page covers ${subCount} substitutes specifically tested for ${ctxName} recipes, with ratios optimized for this exact use case. The top-performing options are ${sub1.displayName} at ${sub1Ratio} and ${sub2.displayName} at ${formatRatio(sub2.baseRatio)}—both deliver reliable results in ${ctxName}. In this recipe type, ${ingredientName} typically provides ${getContextRole(context)}, so choosing the right substitute matters for achieving the expected texture and flavor. Our calculator adjusts conversion ratios based on recipe context and displays texture impact ratings—whether the result will be nearly identical, slightly different, or noticeably changed from the original. Each alternative includes detailed notes on what to watch for and when to avoid using it. Filter results by dietary requirements like vegan, dairy-free, or gluten-free, then select your quantity to get precise measurements. The FAQ section below answers common questions about ${ingredientName} substitution in ${ctxName} recipes.`;
+  return `Making ${ctxName} without ${ingredientName}? In this recipe, ${ingredientName} provides ${role}—so substitute choice matters. This calculator ranks ${subCount} options specifically for ${ctxName}. Top performers: ${sub1.displayName} at ${sub1Ratio} and ${sub2.displayName} at ${formatRatio(sub2.baseRatio)}. Each shows texture impact (identical to noticeable change), dietary tags, and "avoid in" warnings. Filter by vegan, dairy-free, or gluten-free requirements. Select quantity to get precise measurements.`;
 }
 
 function buildGoalIntro(
@@ -100,7 +121,7 @@ function buildGoalIntro(
   const sub2 = topSubs[1];
   const goalSubs = ingredient.substitutes.filter(s => s.goals.includes(goal));
   
-  return `Looking for ${ingredientName} substitutes that specifically provide ${goal}? This guide ranks alternatives by how effectively they deliver that texture goal. The top performers for ${goal} are ${sub1.displayName} and ${sub2.displayName}—both have been tested across multiple recipe types to confirm consistent results. Out of ${ingredient.substitutes.length} total alternatives in our database, ${goalSubs.length} are rated highly for ${goal}. The calculator below lets you select your quantity and compare exact ratios for each option. Every substitute includes a texture impact score showing how closely it matches the original ingredient's performance. Keep in mind that some alternatives excel at ${goal} but may introduce subtle changes to flavor or appearance—check our notes before making your final choice. We also indicate which recipes each substitute works best in, making it easier to match options to your specific dish. Use the dietary filters to combine ${goal} requirements with restrictions like vegan, dairy-free, or gluten-free.`;
+  return `Need ${ingredientName} substitutes that specifically provide ${goal}? This calculator ranks ${goalSubs.length} options by ${goal} effectiveness. Top performers: ${sub1.displayName} and ${sub2.displayName}—both tested across recipe types for consistent ${goal} results. Each shows texture impact, dietary tags, and recipe-specific warnings. Some options excel at ${goal} but may change flavor or appearance—check notes before choosing. Select quantity and recipe type for precise ratios.`;
 }
 
 function buildDietIntro(
@@ -113,7 +134,7 @@ function buildDietIntro(
   const sub1 = dietSubs[0] || topSubs[0];
   const sub2 = dietSubs[1] || topSubs[1];
   
-  return `Need ${diet} ${ingredientName} alternatives? This calculator shows ${dietSubs.length} options verified to fit ${diet} dietary requirements. The top choices are ${sub1.displayName} (${formatRatio(sub1.baseRatio)}) and ${sub2.displayName} (${formatRatio(sub2.baseRatio)})—both work reliably across multiple recipe types while staying ${diet}-compliant. Every alternative on this page has been tagged with accurate dietary information, and the exact conversion ratios are calculated automatically for any quantity you enter. The texture impact column shows how each substitute affects your recipe—some maintain nearly identical results while others create subtle variations in texture or flavor. We include "best in" recommendations to help you match substitutes to specific recipe contexts like baking, sauces, or savory dishes, plus "avoid in" warnings for combinations that don't work well. Whether you're cooking for dietary restrictions, allergies, or personal preferences, this guide covers what you need. Select your quantity using the calculator, apply any additional filters, and review the detailed notes for each substitute. The FAQ section addresses common questions about ${diet} ${ingredientName} replacements.`;
+  return `Need ${diet} ${ingredientName} alternatives? This calculator shows ${dietSubs.length} verified ${diet}-compliant options. Top choices: ${sub1.displayName} (${formatRatio(sub1.baseRatio)}) and ${sub2.displayName} (${formatRatio(sub2.baseRatio)}). Each includes texture impact ratings—some deliver near-identical results, others create noticeable changes. See "best in" notes for recipe matching and "avoid in" warnings. Enter quantity for auto-calculated measurements, and filter further by recipe type if needed.`;
 }
 
 function buildDietContextIntro(

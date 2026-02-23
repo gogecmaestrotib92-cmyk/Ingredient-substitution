@@ -103,8 +103,8 @@ export function Calculator({ pageSpec }: CalculatorProps) {
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
             Substitution Calculator
           </h2>
-          <p className="text-sm text-slate-500 mt-1">
-            Automatically adjusts substitutes based on your recipe type.
+          <p className="text-sm text-slate-600 mt-1">
+            Automatically adjusts substitutes based on what you&apos;re making.
           </p>
         </div>
 
@@ -229,8 +229,8 @@ export function Calculator({ pageSpec }: CalculatorProps) {
           </div>
 
           {/* Tip text */}
-          <p className="text-xs text-slate-400 pt-1">
-            Tip: Changing what you&apos;re making may change the recommended substitutes.
+          <p className="text-xs text-slate-500 pt-1 italic">
+            Tip: Changing what you&apos;re making may reorder substitutes by suitability.
           </p>
         </div>
       </div>
@@ -238,11 +238,11 @@ export function Calculator({ pageSpec }: CalculatorProps) {
       {/* Results Section */}
       {output && output.results.length > 0 && (
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-baseline justify-between gap-4">
             <h3 className="text-lg sm:text-xl font-bold text-slate-900">
-              Top {output.results.length} Substitutes
+              Best Substitutes <span className="font-medium text-slate-500">(Ranked)</span>
             </h3>
-            <span className="text-sm text-slate-500">
+            <span className="text-xs sm:text-sm text-slate-400 shrink-0">
               for {quantity} {unit}{quantity !== 1 && !unit.endsWith('s') ? 's' : ''}
             </span>
           </div>

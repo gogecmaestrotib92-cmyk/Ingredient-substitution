@@ -126,17 +126,17 @@ export default function SubstitutePage({
             {headline}
           </h1>
           
-          {/* Subtitle - context-specific value prop */}
-          <p className="text-base sm:text-lg text-slate-500 mb-5 sm:mb-6">
+          {/* Subtitle - benefit-driven value prop */}
+          <p className="text-base sm:text-lg text-slate-600 mb-5 sm:mb-6 font-medium">
             {isQuantity 
-              ? `Exact measurements for replacing ${quantity} ${ingredient.displayName.toLowerCase()}${quantity > 1 ? 's' : ''} with ${ingredient.substitutes.length} tested alternatives`
+              ? `Exact measurements for ${quantity} ${ingredient.displayName.toLowerCase()}${quantity > 1 ? 's' : ''} · ${ingredient.substitutes.length} tested alternatives`
               : pageSpec.context && pageSpec.diet 
-                ? `${pageSpec.diet.charAt(0).toUpperCase() + pageSpec.diet.slice(1)}-friendly options for ${pageSpec.context.replace(/_/g, ' ')} with exact ratios`
+                ? `${pageSpec.diet.charAt(0).toUpperCase() + pageSpec.diet.slice(1)}-friendly for ${pageSpec.context.replace(/_/g, ' ')} · exact ratios + texture impact`
                 : pageSpec.context 
-                  ? `Tested ratios for perfect ${pageSpec.context.replace(/_/g, ' ')} every time`
+                  ? `Exact ratios + texture impact for perfect ${pageSpec.context.replace(/_/g, ' ')}`
                   : pageSpec.diet
-                    ? `${pageSpec.diet.charAt(0).toUpperCase() + pageSpec.diet.slice(1)}-friendly alternatives with precise measurements`
-                    : `Exact conversion ratios for any recipe`
+                    ? `${pageSpec.diet.charAt(0).toUpperCase() + pageSpec.diet.slice(1)}-friendly alternatives · precise measurements + best uses`
+                    : `Exact ratios + texture impact for baking and cooking`
             }
           </p>
           
@@ -195,28 +195,28 @@ export default function SubstitutePage({
 
           {/* Sidebar - Shows at bottom on mobile */}
           <aside className="lg:col-span-1 order-2 lg:order-2">
-            {/* Quick Summary Card */}
-            <div className="card p-5 sm:p-6 lg:sticky lg:top-20">
-              <h3 className="font-bold text-slate-900 text-lg mb-5">Quick Reference</h3>
+            {/* Quick Summary Card - Premium styling */}
+            <div className="bg-gradient-to-b from-slate-50 to-white border-2 border-slate-200 rounded-2xl p-6 sm:p-7 lg:sticky lg:top-20 shadow-sm">
+              <h3 className="font-bold text-slate-900 text-lg mb-6 pb-3 border-b border-slate-100">Quick Reference</h3>
               
-              <div className="space-y-5">
+              <div className="space-y-6">
                 <div>
-                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Replacing</span>
-                  <div className="font-semibold text-slate-900 mt-1">{ingredient.displayName}</div>
+                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Replacing</span>
+                  <div className="font-bold text-slate-900 text-lg mt-1">{ingredient.displayName}</div>
                 </div>
                 
                 <div>
-                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Default Unit</span>
-                  <div className="font-semibold text-slate-900 capitalize mt-1">{ingredient.defaultUnit}</div>
+                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Default Unit</span>
+                  <div className="font-semibold text-slate-800 capitalize mt-1">{ingredient.defaultUnit}</div>
                 </div>
                 
                 <div>
-                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Best For</span>
+                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Best For</span>
                   <div className="flex flex-wrap gap-1.5 mt-2">
                     {ingredient.commonContexts.slice(0, 4).map(ctx => (
                       <span 
                         key={ctx}
-                        className="px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-medium capitalize"
+                        className="px-2.5 py-1 bg-primary-50 text-primary-700 rounded-lg text-xs font-semibold capitalize"
                       >
                         {ctx.replace(/_/g, ' ')}
                       </span>
@@ -225,21 +225,21 @@ export default function SubstitutePage({
                 </div>
 
                 <div>
-                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Available Options</span>
-                  <div className="font-semibold text-slate-900 mt-1">{ingredient.substitutes.length} substitutes</div>
+                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Available Options</span>
+                  <div className="font-semibold text-slate-800 mt-1">{ingredient.substitutes.length} tested substitutes</div>
                 </div>
               </div>
 
               {/* Top 3 Substitutes Preview */}
-              <div className="mt-6 pt-6 border-t border-slate-100">
-                <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Top Substitutes</h4>
-                <ul className="space-y-2.5">
+              <div className="mt-6 pt-5 border-t border-slate-200">
+                <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3">Top Ranked</h4>
+                <ul className="space-y-3">
                   {ingredient.substitutes.slice(0, 3).map((sub, i) => (
-                    <li key={sub.id} className="flex items-center gap-2.5 text-sm">
-                      <span className="w-6 h-6 rounded-lg bg-primary-50 text-primary-700 flex items-center justify-center text-xs font-bold">
+                    <li key={sub.id} className="flex items-center gap-3 text-sm">
+                      <span className="w-7 h-7 rounded-lg bg-primary-100 text-primary-700 flex items-center justify-center text-xs font-bold ring-1 ring-primary-200">
                         {i + 1}
                       </span>
-                      <span className="text-slate-700 font-medium">{sub.displayName}</span>
+                      <span className="text-slate-800 font-medium">{sub.displayName}</span>
                     </li>
                   ))}
                 </ul>
