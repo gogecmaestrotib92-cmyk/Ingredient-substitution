@@ -238,13 +238,18 @@ export function Calculator({ pageSpec }: CalculatorProps) {
       {/* Results Section */}
       {output && output.results.length > 0 && (
         <div className="space-y-4">
-          <div className="flex items-baseline justify-between gap-4">
-            <h3 className="text-lg sm:text-xl font-bold text-slate-900">
-              Best Substitutes <span className="font-medium text-slate-500">(Ranked)</span>
-            </h3>
-            <span className="text-xs sm:text-sm text-slate-400 shrink-0">
-              for {quantity} {unit}{quantity !== 1 && !unit.endsWith('s') ? 's' : ''}
-            </span>
+          <div>
+            <div className="flex items-baseline justify-between gap-4">
+              <h3 className="text-lg sm:text-xl font-bold text-slate-900">
+                Best 3 Substitutes <span className="font-medium text-slate-500">(Ranked)</span>
+              </h3>
+              <span className="text-xs sm:text-sm text-slate-400 shrink-0">
+                for {quantity} {unit}{quantity !== 1 && !unit.endsWith('s') ? 's' : ''}
+              </span>
+            </div>
+            <p className="text-sm text-slate-500 mt-1">
+              Showing the highest-rated options based on your recipe type and dietary preferences.
+            </p>
           </div>
           
           <div className="space-y-4">

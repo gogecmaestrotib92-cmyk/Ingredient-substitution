@@ -244,13 +244,14 @@ export default function SubstitutePage({
 
                 <div>
                   <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Available Options</span>
-                  <div className="font-semibold text-slate-800 mt-1">{ingredient.substitutes.length} tested substitutes</div>
+                  <div className="font-semibold text-slate-800 mt-1">{ingredient.substitutes.length} total substitutes available</div>
+                  <p className="text-xs text-slate-500 mt-1">Currently showing the top 3 based on your selection.</p>
                 </div>
               </div>
 
               {/* Top 3 Substitutes Preview */}
               <div className="mt-6 pt-5 border-t border-slate-200">
-                <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3">Top Ranked</h4>
+                <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3">Top 3 Shown</h4>
                 <ul className="space-y-3">
                   {ingredient.substitutes.slice(0, 3).map((sub, i) => (
                     <li key={sub.id} className="flex items-center gap-3 text-sm">
