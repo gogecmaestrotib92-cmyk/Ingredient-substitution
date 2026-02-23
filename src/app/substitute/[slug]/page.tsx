@@ -6,6 +6,7 @@ import { RelatedLinks } from '@/components/RelatedLinks';
 import { WhenNotToUse } from '@/components/WhenNotToUse';
 import { ProductPlaceholder } from '@/components/ProductPlaceholder';
 import { ProTips, buildProTips } from '@/components/ProTips';
+import QuantityTips from '@/components/QuantityTips';
 import { getAllSlugs, getPageSpecBySlug } from '@/lib/slugs';
 import { getIngredientById } from '@/lib/data';
 import { generateMetaTags } from '@/lib/seo';
@@ -14,6 +15,13 @@ import { buildIntro } from '@/lib/intro';
 import { buildPriorityIntro } from '@/lib/priorityIntro';
 import { isPriorityPage } from '@/lib/priorityPages';
 import { buildFAQs, generateFAQJsonLd } from '@/lib/faqBuilder';
+import { 
+  isQuantityPage, 
+  buildQuantityIntro, 
+  buildQuantityH1, 
+  buildQuantityTips, 
+  buildQuantityFAQs 
+} from '@/lib/quantityPages';
 
 // Generate static params for all pages
 export async function generateStaticParams() {
@@ -59,17 +67,38 @@ export default function SubstitutePage({
   // Determine if this is a priority page for enhanced content
   const isPriority = isPriorityPage(params.slug);
   
-  // Build dynamic intro - use priority intro for priority pages
+  // Determine if this is a quantity-specific page
+  const isQuantity = isQuantityPage(params.slug);
+  const quantity = pageSpec.quantity || 1;
+  
+  // Build dynamic intro - priority first, then quantity, then default
   const introText = isPriority 
     ? buildPriorityIntro(pageSpec, ingredient)
-    : buildIntro(pageSpec, ingredient);
+    : isQuantity
+      ? buildQuantityIntro(pageSpec, ingredient)
+      : buildIntro(pageSpec, ingredient);
   
-  // Build FAQs using context-aware builder
-  const faqItems = buildFAQs(pageSpec, ingredient);
+  // Build headline - use quantity-specific H1 for quantity pages
+  const headline = isQuantity 
+    ? buildQuantityH1(pageSpec, ingredient) 
+    : pageSpec.h1;
+  
+  // Build FAQs using context-aware builder, add quantity FAQs for quantity pages
+  let faqItems = buildFAQs(pageSpec, ingredient);
+  if (isQuantity) {
+    const quantityFaqs = buildQuantityFAQs(pageSpec, ingredient);
+    // Merge quantity FAQs with existing, avoiding duplicates
+    const existingQuestions = new Set(faqItems.map(f => f.question.toLowerCase()));
+    const newFaqs = quantityFaqs.filter(q => !existingQuestions.has(q.question.toLowerCase()));
+    faqItems = [...faqItems, ...newFaqs].slice(0, 10); // Limit to 10 total
+  }
   const faqJsonLd = generateFAQJsonLd(faqItems);
   
   // Build pro tips for priority pages
   const proTips = isPriority ? buildProTips(pageSpec, ingredient) : [];
+  
+  // Build quantity tips for quantity pages
+  const quantityTips = isQuantity ? buildQuantityTips(pageSpec, ingredient) : [];
 
   return (
     <div className="py-8 md:py-14">
@@ -94,20 +123,34 @@ export default function SubstitutePage({
         {/* Header */}
         <header className="mb-8 sm:mb-12">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-3 sm:mb-4 leading-tight tracking-tight">
-            {pageSpec.h1}
+            {headline}
           </h1>
           
           {/* Subtitle - context-specific value prop */}
           <p className="text-base sm:text-lg text-slate-500 mb-5 sm:mb-6">
-            {pageSpec.context && pageSpec.diet 
-              ? `${pageSpec.diet.charAt(0).toUpperCase() + pageSpec.diet.slice(1)}-friendly options for ${pageSpec.context.replace(/_/g, ' ')} with exact ratios`
-              : pageSpec.context 
-                ? `Tested ratios for perfect ${pageSpec.context.replace(/_/g, ' ')} every time`
-                : pageSpec.diet
-                  ? `${pageSpec.diet.charAt(0).toUpperCase() + pageSpec.diet.slice(1)}-friendly alternatives with precise measurements`
-                  : `Exact conversion ratios for any recipe`
+            {isQuantity 
+              ? `Exact measurements for replacing ${quantity} ${ingredient.displayName.toLowerCase()}${quantity > 1 ? 's' : ''} with ${ingredient.substitutes.length} tested alternatives`
+              : pageSpec.context && pageSpec.diet 
+                ? `${pageSpec.diet.charAt(0).toUpperCase() + pageSpec.diet.slice(1)}-friendly options for ${pageSpec.context.replace(/_/g, ' ')} with exact ratios`
+                : pageSpec.context 
+                  ? `Tested ratios for perfect ${pageSpec.context.replace(/_/g, ' ')} every time`
+                  : pageSpec.diet
+                    ? `${pageSpec.diet.charAt(0).toUpperCase() + pageSpec.diet.slice(1)}-friendly alternatives with precise measurements`
+                    : `Exact conversion ratios for any recipe`
             }
           </p>
+          
+          {/* Quantity badge for quantity pages */}
+          {isQuantity && (
+            <div className="flex items-center gap-2 mb-5">
+              <span className="inline-flex items-center gap-2 bg-amber-100 text-amber-800 px-4 py-2 rounded-full text-sm font-semibold">
+                <span className="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                  {quantity}
+                </span>
+                You are replacing {quantity} {ingredient.displayName.toLowerCase()}{quantity > 1 ? 's' : ''}
+              </span>
+            </div>
+          )}
 
           {/* Intro - now using dynamic context-aware intro */}
           <p className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-3xl">
@@ -135,6 +178,15 @@ export default function SubstitutePage({
             {/* Pro Tips - Priority pages only */}
             {isPriority && proTips.length > 0 && (
               <ProTips tips={proTips} />
+            )}
+            
+            {/* Quantity Tips - Quantity pages only */}
+            {isQuantity && quantityTips.length > 0 && (
+              <QuantityTips 
+                tips={quantityTips} 
+                quantity={quantity} 
+                ingredientName={ingredient.displayName} 
+              />
             )}
 
             {/* FAQ Section - now using dynamically built FAQs */}

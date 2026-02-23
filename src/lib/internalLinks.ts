@@ -1,6 +1,7 @@
 import type { PageSpec, RelatedLink, Cluster } from './types';
 import { buildPageSpecs, getPageSpecBySlug } from './slugs';
 import { isPriorityPage } from './priorityPages';
+import { isQuantityPage } from './quantityPages';
 
 // Cross-cluster mapping for internal linking - expanded with more relevant links
 const crossClusterLinks: Record<Cluster, string[]> = {
@@ -20,11 +21,13 @@ const priorityContexts: Record<string, string[]> = {
 
 // Get related links for a page
 // Priority pages get: base + 3 context + 2 diet + 2 cross-cluster = 8 links
+// Quantity pages get: base + 2 quantity + 2 context + 1 diet + 1 cross-cluster = 7 links
 // Standard pages get: base + 2 context + 1 diet + 1 cross-cluster = 5 links
 export function getRelatedLinks(pageSpec: PageSpec): RelatedLink[] {
   const links: RelatedLink[] = [];
   const allSpecs = buildPageSpecs();
   const isPriority = isPriorityPage(pageSpec.slug);
+  const isQuantity = isQuantityPage(pageSpec.slug);
   
   // 1. ALWAYS add base ingredient page (if not already on it)
   const baseSlugs: Record<string, string> = {
@@ -51,6 +54,29 @@ export function getRelatedLinks(pageSpec: PageSpec): RelatedLink[] {
         priority: 1,
       });
     }
+  }
+  
+  // 1.5. For quantity pages, add other quantity variants (2 eggs, 3 eggs, 4 eggs)
+  if (isQuantity) {
+    const currentQuantity = pageSpec.quantity || 1;
+    const quantitySiblings = allSpecs
+      .filter(spec =>
+        spec.ingredientId === pageSpec.ingredientId &&
+        spec.variant === 'quantity' &&
+        spec.slug !== pageSpec.slug &&
+        spec.quantity !== currentQuantity
+      )
+      .sort((a, b) => (a.quantity || 1) - (b.quantity || 1))
+      .slice(0, 2); // Link to 2 other quantities
+    
+    quantitySiblings.forEach((spec, index) => {
+      links.push({
+        slug: spec.slug,
+        title: spec.h1,
+        type: 'quantity',
+        priority: 1.5 + index * 0.1,
+      });
+    });
   }
   
   // 2. Add sibling context pages (same ingredient, different context)

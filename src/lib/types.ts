@@ -137,7 +137,7 @@ export interface CalculatorOutput {
 export interface RelatedLink {
   slug: string;
   title: string;
-  type: 'base' | 'context' | 'diet' | 'cross-cluster';
+  type: 'base' | 'context' | 'diet' | 'cross-cluster' | 'quantity';
   priority?: number; // Lower number = higher priority
 }
 
