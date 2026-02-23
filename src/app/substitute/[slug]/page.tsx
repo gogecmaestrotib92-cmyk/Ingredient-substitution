@@ -7,6 +7,7 @@ import { WhenNotToUse } from '@/components/WhenNotToUse';
 import { ProductPlaceholder } from '@/components/ProductPlaceholder';
 import { ProTips, buildProTips } from '@/components/ProTips';
 import QuantityTips from '@/components/QuantityTips';
+import { HowItWorks } from '@/components/HowItWorks';
 import { getAllSlugs, getPageSpecBySlug } from '@/lib/slugs';
 import { getIngredientById } from '@/lib/data';
 import { generateMetaTags } from '@/lib/seo';
@@ -22,6 +23,7 @@ import {
   buildQuantityTips, 
   buildQuantityFAQs 
 } from '@/lib/quantityPages';
+import { isBasePage, buildShortIntro, buildLongExplanation } from '@/lib/basePageContent';
 
 // Generate static params for all pages
 export async function generateStaticParams() {
@@ -71,12 +73,20 @@ export default function SubstitutePage({
   const isQuantity = isQuantityPage(params.slug);
   const quantity = pageSpec.quantity || 1;
   
-  // Build dynamic intro - priority first, then quantity, then default
-  const introText = isPriority 
-    ? buildPriorityIntro(pageSpec, ingredient)
-    : isQuantity
-      ? buildQuantityIntro(pageSpec, ingredient)
-      : buildIntro(pageSpec, ingredient);
+  // Determine if this is a base ingredient page (e.g., /substitute/egg)
+  const isBase = isBasePage(pageSpec.variant);
+  
+  // Build dynamic intro - base pages get short intro, others get full intro
+  const introText = isBase
+    ? buildShortIntro(ingredient)
+    : isPriority 
+      ? buildPriorityIntro(pageSpec, ingredient)
+      : isQuantity
+        ? buildQuantityIntro(pageSpec, ingredient)
+        : buildIntro(pageSpec, ingredient);
+  
+  // Build long explanation for base pages (displayed below calculator)
+  const howItWorks = isBase ? buildLongExplanation(ingredient) : null;
   
   // Build headline - use quantity-specific H1 for quantity pages
   const headline = isQuantity 
@@ -121,7 +131,7 @@ export default function SubstitutePage({
         </nav>
 
         {/* Header */}
-        <header className="mb-8 sm:mb-12">
+        <header className={`${isBase ? 'mb-6 sm:mb-8' : 'mb-8 sm:mb-12'}`}>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-3 sm:mb-4 leading-tight tracking-tight">
             {headline}
           </h1>
@@ -152,25 +162,33 @@ export default function SubstitutePage({
             </div>
           )}
 
-          {/* Intro - now using dynamic context-aware intro */}
-          <p className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-3xl">
+          {/* Intro - short for base pages, full for others */}
+          <p className={`leading-relaxed max-w-3xl ${isBase ? 'text-base sm:text-lg text-slate-600' : 'text-lg sm:text-xl text-slate-600'}`}>
             {introText}
           </p>
           
-          {/* Last Updated */}
-          <p className="text-xs text-slate-400 mt-4 flex items-center gap-1.5">
+          {/* Last Updated - inline with intro for base pages */}
+          <p className="text-xs text-slate-400 mt-3 flex items-center gap-1.5">
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             Updated {new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
           </p>
         </header>
+        
+        {/* Divider before calculator for base pages */}
+        {isBase && <div className="border-t border-slate-200 mb-8" />}
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
           {/* Calculator - Main Column */}
           <div className="lg:col-span-2 order-1">
             <Calculator pageSpec={pageSpec} />
+            
+            {/* How It Works - Base pages only (long explanation moved below calculator) */}
+            {isBase && howItWorks && (
+              <HowItWorks title={howItWorks.title} paragraphs={howItWorks.paragraphs} />
+            )}
 
             {/* When Not to Use */}
             <WhenNotToUse substitutes={ingredient.substitutes} />
