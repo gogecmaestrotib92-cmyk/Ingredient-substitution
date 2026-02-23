@@ -5,6 +5,7 @@ import type { PageSpec, CalculatorInput, CalculatorOutput, RecipeContext, GoalTa
 import { calculateSubstitution, getDefaultInput } from '@/lib/calculateSubstitution';
 import { getIngredientById } from '@/lib/data';
 import { SubstituteCard } from './SubstituteCard';
+import { CompactSubstituteRow } from './CompactSubstituteRow';
 
 interface CalculatorProps {
   pageSpec: PageSpec;
@@ -237,26 +238,70 @@ export function Calculator({ pageSpec }: CalculatorProps) {
 
       {/* Results Section */}
       {output && output.results.length > 0 && (
-        <div className="space-y-4">
-          <div>
-            <div className="flex items-baseline justify-between gap-4">
-              <h3 className="text-lg sm:text-xl font-bold text-slate-900">
-                Best 3 Substitutes <span className="font-medium text-slate-500">(Ranked)</span>
-              </h3>
-              <span className="text-xs sm:text-sm text-slate-400 shrink-0">
-                for {quantity} {unit}{quantity !== 1 && !unit.endsWith('s') ? 's' : ''}
-              </span>
-            </div>
-            <p className="text-sm text-slate-500 mt-1">
-              Showing the highest-rated options based on your recipe type and dietary preferences.
-            </p>
-          </div>
-          
+        <div className="space-y-6">
+          {/* Top 3 Section */}
           <div className="space-y-4">
-            {output.results.map((result) => (
-              <SubstituteCard key={result.substitute.id} result={result} quantity={quantity} unit={unit} />
-            ))}
+            <div>
+              <div className="flex items-baseline justify-between gap-4">
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900">
+                  Best 3 Substitutes <span className="font-medium text-slate-500">(Ranked)</span>
+                </h3>
+                <span className="text-xs sm:text-sm text-slate-400 shrink-0">
+                  for {quantity} {unit}{quantity !== 1 && !unit.endsWith('s') ? 's' : ''}
+                </span>
+              </div>
+              <p className="text-sm text-slate-500 mt-1">
+                Showing the highest-rated options based on your recipe type and dietary preferences.
+              </p>
+            </div>
+            
+            <div className="space-y-4">
+              {output.results.slice(0, 3).map((result) => (
+                <SubstituteCard key={result.substitute.id} result={result} quantity={quantity} unit={unit} />
+              ))}
+            </div>
           </div>
+
+          {/* Show All Substitutes - Expandable (only if more than 3) */}
+          {output.results.length > 3 && (
+            <details className="group">
+              <summary className="flex items-center gap-2 cursor-pointer select-none py-3 px-4 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors">
+                <svg 
+                  className="w-4 h-4 text-slate-500 transition-transform group-open:rotate-90" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+                <span className="font-medium text-slate-700">
+                  Show all substitutes
+                </span>
+                <span className="text-sm text-slate-500">
+                  ({output.results.length} total)
+                </span>
+              </summary>
+              
+              <div className="mt-4 space-y-2">
+                <h4 className="text-sm font-semibold text-slate-600 mb-3">
+                  Other substitutes (ranked #{4}–#{output.results.length})
+                </h4>
+                <div className="space-y-2">
+                  {output.results.slice(3).map((result) => (
+                    <CompactSubstituteRow 
+                      key={result.substitute.id} 
+                      result={result} 
+                      quantity={quantity} 
+                      unit={unit} 
+                    />
+                  ))}
+                </div>
+                <p className="text-xs text-slate-400 mt-3 italic">
+                  These options ranked lower for your current selection but may work well in other contexts.
+                </p>
+              </div>
+            </details>
+          )}
         </div>
       )}
 

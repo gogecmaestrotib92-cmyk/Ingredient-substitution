@@ -94,11 +94,8 @@ export function calculateSubstitution(
   // Sort by score descending
   scored.sort((a, b) => b.score - a.score);
   
-  // Take top 3
-  const top3 = scored.slice(0, 3);
-  
-  // Generate results
-  const results: SubstituteResult[] = top3.map((item, index) => {
+  // Generate results for ALL substitutes (UI will show top 3 + expandable rest)
+  const results: SubstituteResult[] = scored.map((item, index) => {
     const { substitute, ratio } = item;
     
     // Calculate the converted amount

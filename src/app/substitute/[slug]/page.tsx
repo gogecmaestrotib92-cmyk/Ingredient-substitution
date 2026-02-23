@@ -244,8 +244,8 @@ export default function SubstitutePage({
 
                 <div>
                   <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Available Options</span>
-                  <div className="font-semibold text-slate-800 mt-1">{ingredient.substitutes.length} total substitutes available</div>
-                  <p className="text-xs text-slate-500 mt-1">Currently showing the top 3 based on your selection.</p>
+                  <div className="font-semibold text-slate-800 mt-1">{ingredient.substitutes.length} total substitutes</div>
+                  <p className="text-xs text-slate-500 mt-1">Showing best 3 above — expand below to see all.</p>
                 </div>
               </div>
 
